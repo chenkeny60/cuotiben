@@ -15,7 +15,9 @@
   .card summary { display:flex; flex-wrap:wrap; gap:6px; align-items:center; cursor:pointer; list-style:none; }
   .card summary::-webkit-details-marker { display:none; }
   .toggle-hint { margin-left:auto; font-size:12px; color:#2f5fd0; font-weight:600; }
-  .card[open ] .toggle-hint { visibility:hidden; }
+  .toggle-hint .h-close { display:none; }
+  .card[open ] .toggle-hint .h-open { display:none; }
+  .card[open ] .toggle-hint .h-close { display:inline; }
   .code { background:#2f5fd0; color:#fff; font-weight:700; border-radius:8px; padding:3px 10px; font-size:14px; }
   .module { font-weight:600; font-size:15px; margin-right:4px; }
   .tag { font-size:12px; border-radius:999px; padding:2px 9px; border:1px solid #d8deeb; background:#f2f5fb; }
@@ -58,7 +60,7 @@
     <span class="tag tag-err">错因 · 方法选择</span>
     <span class="tag m-bad">未掌握</span>
     <span class="tag tag-date">复习 · 2026-10-25</span>
-    <span class="toggle-hint">展开详情 ▾</span>
+    <span class="toggle-hint"><span class="h-open">展开详情 ▾</span><span class="h-close">收起 ▴</span></span>
   </summary>
   <div class="sec prob">
     <div class="sec-title">📌 原题</div>
@@ -94,7 +96,7 @@
     <span class="tag tag-err">错因 · 方法选择</span>
     <span class="tag m-bad">未掌握</span>
     <span class="tag tag-date">复习 · 2026-10-25</span>
-    <span class="toggle-hint">展开详情 ▾</span>
+    <span class="toggle-hint"><span class="h-open">展开详情 ▾</span><span class="h-close">收起 ▴</span></span>
   </summary>
   <div class="sec prob">
     <div class="sec-title">📌 原题</div>
