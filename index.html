@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>专升本高数错题本 · 图文版</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background:#f4f6fb; color:#1f2430; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 20px 14px 40px; }
+  h1 { font-size: 22px; margin: 6px 0 4px; }
+  .sub { color:#5b6474; font-size: 13px; margin-bottom: 14px; }
+  .stats { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px; }
+  .stat { background:#fff; border:1px solid #e2e7f2; border-radius:10px; padding:8px 14px; font-size:13px; }
+  .stat b { font-size:16px; color:#2f5fd0; }
+  .card { background:#fff; border:1px solid #e2e7f2; border-radius:14px; padding:18px; margin-bottom:18px; box-shadow:0 2px 10px rgba(31,45,90,.05); }
+  .card summary { display:flex; flex-wrap:wrap; gap:6px; align-items:center; cursor:pointer; list-style:none; }
+  .card summary::-webkit-details-marker { display:none; }
+  .toggle-hint { margin-left:auto; font-size:12px; color:#2f5fd0; font-weight:600; }
+  .card[open ] .toggle-hint { visibility:hidden; }
+  .code { background:#2f5fd0; color:#fff; font-weight:700; border-radius:8px; padding:3px 10px; font-size:14px; }
+  .module { font-weight:600; font-size:15px; margin-right:4px; }
+  .tag { font-size:12px; border-radius:999px; padding:2px 9px; border:1px solid #d8deeb; background:#f2f5fb; }
+  .tag-err { background:#fdecec; border-color:#f3c2c2; color:#b02a2a; }
+  .m-bad { background:#fdecec; border-color:#f3c2c2; color:#b02a2a; }
+  .m-mid { background:#fff6e0; border-color:#ecd9a0; color:#8a6d1a; }
+  .m-good { background:#e7f6ec; border-color:#bfe3cb; color:#1e7a3c; }
+  .tag-date { background:#eef3ff; color:#2f5fd0; border-color:#cfddfa; }
+  .sec { border-radius:10px; padding:10px 12px; margin-top:10px; }
+  .sec p { margin:4px 0; line-height:1.75; font-size:14.5px; }
+  .sec-title { font-weight:700; font-size:13.5px; margin-bottom:4px; }
+  .prob { background:#f7f9ff; border:1px solid #dde6fa; }
+  .prob-text { font-size:15.5px !important; font-weight:600; }
+  .err { background:#fff7f7; border:1px solid #f6dede; }
+  .sol { background:#f5fbf6; border:1px solid #d9eedd; }
+  .key { background:#fbfbf5; border:1px solid #ececd4; }
+  .memo { background:#fffbe8; border:1px solid #f0e3ac; }
+  .var { background:#faf7ff; border:1.5px dashed #b9a7e6; }
+  .var-status { float:right; font-size:12px; color:#6a4fd0; }
+  .hint { color:#7a748f; font-size:12.5px !important; }
+  mark.bad { background:#ffd9d9; color:#a11717; border-radius:3px; padding:0 2px; }
+  .flow { display:flex; flex-wrap:wrap; align-items:center; gap:4px; margin:6px 0 8px; }
+  .flow .chip { background:#e7f6ec; border:1px solid #bfe3cb; color:#1e7a3c; border-radius:999px; padding:2px 10px; font-size:12.5px; font-weight:600; }
+  .flow .arrow { color:#8aa892; font-weight:700; }
+  footer { color:#8a93a5; font-size:12px; text-align:center; margin-top:8px; }
+</style></head>
+<body><div class="wrap">
+  <h1>📘 专升本高数错题本 · 图文版</h1>
+  <div class="sub">目标：2027 四川统招专升本 400+ ｜ 复习规则：先闭卷做变式题，做对才算过，没过回看原题正确解法</div>
+  <div class="stats">
+    <span class="stat">共 <b>2</b> 题</span>
+    <span class="stat">未掌握 <b>2</b> 题</span>
+    <span class="stat">最近复习日 <b>2026-10-25</b></span>
+  </div>
+  
+<details class="card">
+  <summary>
+    <span class="code">GS-001</span>
+    <span class="module">拉格朗日中值定理与不等式放缩</span>
+    <span class="tag tag-err">错因 · 方法选择</span>
+    <span class="tag m-bad">未掌握</span>
+    <span class="tag tag-date">复习 · 2026-10-25</span>
+    <span class="toggle-hint">展开详情 ▾</span>
+  </summary>
+  <div class="sec prob">
+    <div class="sec-title">📌 原题</div>
+    <p class="prob-text">设 0&lt;a&lt;b，证明不等式 2a/(a²+b²) &lt; (ln b − ln a)/(b−a)。</p>
+  </div>
+  <div class="sec err">
+    <div class="sec-title">❌ 我的错误步骤</div>
+    <p>前两步等价变形正确（同乘 b−a&gt;0；令 t=b/a&gt;1 换元）；之后没收尾：黑笔辅助函数路线被划掉未做下去，红笔拉格朗日路线只写到 1/ξ=(ln b−ln a)/(b−a)，收尾被划掉、看不清，<mark class="bad">没接上 1/ξ 的下界放缩</mark>。</p>
+  </div>
+  <div class="sec sol">
+    <div class="sec-title">✅ 正确解法</div>
+    <div class="flow"><span class="chip">对 ln x 用拉格朗日</span><span class="arrow">→</span><span class="chip">差商 = 1/ξ</span><span class="arrow">→</span><span class="chip">a²+b² ≥ 2ab 放缩</span><span class="arrow">→</span><span class="chip">取倒数得证</span></div>
+    <p>设 f(x)=ln x，在 [a,b] 上由拉格朗日中值定理，∃ξ∈(a,b) 使 (ln b−ln a)/(b−a)=f′(ξ)=1/ξ。又由 (a−b)²≥0 得 a²+b²≥2ab，即 (a²+b²)/(2a)≥b&gt;ξ&gt;0，取倒数得 1/ξ&gt;2a/(a²+b²)。代回即得所证不等式。</p>
+  </div>
+  <div class="sec key">
+    <div class="sec-title">🔑 关键方法</div>
+    <p>拉格朗日中值定理把差商换成 1/ξ，再用 a²+b²≥2ab 放缩。</p>
+  </div>
+  <div class="sec memo">
+    <div class="sec-title">💡 需要记忆的结论</div>
+    <p>a²+b²≥2ab；(ln b−ln a)/(b−a)=1/ξ（ξ∈(a,b)）；ξ 越小 1/ξ 越大，放缩取倒数注意方向翻转</p>
+  </div>
+  <div class="sec var">
+      <div class="sec-title">🔁 变式题（先闭卷做它）<span class="var-status">待作答</span></div>
+      <p>设 0&lt;a&lt;b，证明 2(b−a)/(a+b) &lt; ln(b/a)。</p>
+      <p class="hint">做完把答案发到微信，我来判分；参考答案只存档，不公布。</p>
+    </div>
+</details>
+<details class="card">
+  <summary>
+    <span class="code">GS-002</span>
+    <span class="module">中值定理（介值定理、罗尔定理）</span>
+    <span class="tag tag-err">错因 · 方法选择</span>
+    <span class="tag m-bad">未掌握</span>
+    <span class="tag tag-date">复习 · 2026-10-25</span>
+    <span class="toggle-hint">展开详情 ▾</span>
+  </summary>
+  <div class="sec prob">
+    <div class="sec-title">📌 原题</div>
+    <p class="prob-text">设 f(x) 在 [0,2] 上连续、在 (0,2) 内可导，且 f(0)+f(1)=4，f(2)=2。证明：∃ξ∈(0,2)，使 f′(ξ)=0。</p>
+  </div>
+  <div class="sec err">
+    <div class="sec-title">❌ 我的错误步骤</div>
+    <p>① 两次拉格朗日算出 f′(a1)=(f(1)−2)/2、f′(a2)=2−f(1)，却写成 <mark class="bad">f′(a1)/f′(a2)=−2</mark>，比值分子分母写反（应为 −1/2）；② 由 f′(a1) 与 f′(a2) 异号直接推出 ∃ξ 使 f′(ξ)=0——<mark class="bad">介值定理只适用于连续函数，f′ 不一定连续</mark>，此步不严密，且非专升本常规路线；③ 结论区间最后写成 <mark class="bad">(0,1)</mark>，与题目要求的 (0,2) 不一致。</p>
+  </div>
+  <div class="sec sol">
+    <div class="sec-title">✅ 正确解法</div>
+    <div class="flow"><span class="chip">看 f(1) 是否 = 2</span><span class="arrow">→</span><span class="chip">介值定理找等值点 c</span><span class="arrow">→</span><span class="chip">罗尔定理收官</span></div>
+    <p>若 f(1)=2，则由 f(0)+f(1)=4 得 f(0)=2，在 [0,1] 上用罗尔定理得 ξ∈(0,1)⊂(0,2)；若 f(1)≠2，则 f(0)=4−f(1) 与 f(1) 分居 2 的两侧，由 f 在 [0,1] 上连续、介值定理得 c∈(0,1) 使 f(c)=2=f(2)，再在 [c,2] 上用罗尔定理得 ξ∈(c,2)⊂(0,2)。</p>
+  </div>
+  <div class="sec key">
+    <div class="sec-title">🔑 关键方法</div>
+    <p>先用介值定理找等值点，再用罗尔定理。</p>
+  </div>
+  <div class="sec memo">
+    <div class="sec-title">💡 需要记忆的结论</div>
+    <p>介值定理不能默认用于导函数 f′；见到“和为定值 + 端点等值”先想介值定理找等值点、再用罗尔定理</p>
+  </div>
+  <div class="sec var">
+      <div class="sec-title">🔁 变式题（先闭卷做它）<span class="var-status">待作答</span></div>
+      <p>设 f(x) 在 [0,3] 上连续，在 (0,3) 内可导，且 f(0)+f(2)=6，f(3)=3，证明：必存在一点 ξ∈(0,3)，使得 f′(ξ)=0。</p>
+      <p class="hint">做完把答案发到微信，我来判分；参考答案只存档，不公布。</p>
+    </div>
+</details>
+  <footer>图文版与 Excel 错题本同步生成 · 数据源：专升本高数错题本.xlsx</footer>
+</div></body></html>
