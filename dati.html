@@ -4,7 +4,7 @@
 <title>答题版 · 高数错题本</title>
 <style>
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  body { margin:0; font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif; background:#f4f6fb; color:#1f2430; }
+  body { margin:0; font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif; background:#f4f6fb; color:#1f2430; -webkit-touch-callout:none; }
   .wrap { max-width:900px; margin:0 auto; padding:18px 12px 44px; }
   h1 { font-size:21px; margin:4px 0; }
   .sub { color:#5b6474; font-size:13px; margin-bottom:14px; }
@@ -20,7 +20,7 @@
   .tool.active { background:#6a4fd0; color:#fff; border-color:#6a4fd0; }
   .tool.export { background:#1e7a3c; color:#fff; border-color:#1e7a3c; font-weight:700; }
   .spacer { flex:1; }
-  canvas.pad { width:100%; height:62vh; min-height:380px; display:block; border:1.5px solid #c9d4ee; border-radius:10px; background:#fff; touch-action:none; }
+  canvas.pad { width:100%; height:62vh; min-height:380px; display:block; border:1.5px solid #c9d4ee; border-radius:10px; background:#fff; touch-action:none; -webkit-touch-callout:none; -webkit-user-select:none; user-select:none; }
   .hint { color:#7a748f; font-size:12.5px; margin:8px 0 0; line-height:1.6; }
   .empty { background:#fff; border:1px solid #e2e7f2; border-radius:12px; padding:22px; text-align:center; color:#5b6474; }
   footer { color:#8a93a5; font-size:12px; text-align:center; }
@@ -45,7 +45,7 @@
     <button class="tool export">📤 写完导出图片</button>
   </div>
   <canvas class="pad"></canvas>
-  <p class="hint">用 Apple Pencil 直接在上面写；写完点“导出图片”，把图片发到微信给我判分（题面会一起印在图片顶部，不用另外拍题）。</p>
+  <p class="hint">用 Apple Pencil 直接在上面写：已开启防手掌误触，只认笔的痕迹，手掌贴着屏幕也没事（手指写不了，是故意的）；写完点“导出图片”，把图片发到微信给我判分（题面会一起印在图片顶部，不用另外拍题）。</p>
 </section>
 <section class="qcard" data-idx="1" data-code="GS-002" data-question="设 f(x) 在 [0,3] 上连续，在 (0,3) 内可导，且 f(0)+f(2)=6，f(3)=3，证明：必存在一点 ξ∈(0,3)，使得 f′(ξ)=0。">
   <header>
@@ -63,7 +63,7 @@
     <button class="tool export">📤 写完导出图片</button>
   </div>
   <canvas class="pad"></canvas>
-  <p class="hint">用 Apple Pencil 直接在上面写；写完点“导出图片”，把图片发到微信给我判分（题面会一起印在图片顶部，不用另外拍题）。</p>
+  <p class="hint">用 Apple Pencil 直接在上面写：已开启防手掌误触，只认笔的痕迹，手掌贴着屏幕也没事（手指写不了，是故意的）；写完点“导出图片”，把图片发到微信给我判分（题面会一起印在图片顶部，不用另外拍题）。</p>
 </section>
   
   <footer>答题版与错题本同步生成 · 数据源：专升本高数错题本.xlsx</footer>
@@ -123,7 +123,10 @@ document.querySelectorAll('.qcard').forEach(function(card){
     var r = canvas.getBoundingClientRect();
     return [e.clientX - r.left, e.clientY - r.top];
   }
+  function isPen(e){ return !e.pointerType || e.pointerType === 'pen' || e.pointerType === 'mouse'; }
+  canvas.addEventListener('contextmenu', function(e){ e.preventDefault(); });
   canvas.addEventListener('pointerdown', function(e){
+    if (!isPen(e)) return;   // 手掌/手指（touch）一律忽略，只认 Apple Pencil
     e.preventDefault();
     canvas.setPointerCapture(e.pointerId);
     var p = pos(e);
@@ -131,7 +134,7 @@ document.querySelectorAll('.qcard').forEach(function(card){
     cur = {tool: tool, pts: [[p[0], p[1], w]]};
   });
   canvas.addEventListener('pointermove', function(e){
-    if (!cur) return;
+    if (!cur || !isPen(e)) return;
     e.preventDefault();
     var evs = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];
     evs.forEach(function(ev){
