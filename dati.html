@@ -4,6 +4,7 @@
 <title>答题版 · 高数错题本</title>
 <style>
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { overscroll-behavior:none; }
   body { margin:0; font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif; background:#f4f6fb; color:#1f2430; -webkit-touch-callout:none; }
   .wrap { max-width:900px; margin:0 auto; padding:18px 12px 44px; }
   h1 { font-size:21px; margin:4px 0; }
@@ -147,7 +148,7 @@ document.querySelectorAll('.qcard').forEach(function(card){
     if (cur) return;         // 已有一笔在写，新的触点（手掌干扰）不许劫持
     e.preventDefault();
     activeId = e.pointerId;
-    canvas.setPointerCapture(e.pointerId);
+    // 注意：不用 setPointerCapture —— iOS Safari 上它会让 Pencil 的 move 事件中途停止触发，竖线写一半就断
     var p = pos(e);
     var w = (tool === 'eraser') ? 26 : (1.6 + (e.pressure || 0.5) * 3.2);
     cur = {tool: tool, pts: [[p[0], p[1], w]]};
@@ -167,7 +168,11 @@ document.querySelectorAll('.qcard').forEach(function(card){
   });
   function endStroke(){ if (cur) { strokes.push(cur); cur = null; activeId = null; drawAll(); } }
   canvas.addEventListener('pointerup', function(e){ if (e.pointerId === activeId) endStroke(); });
-  canvas.addEventListener('pointercancel', endStroke);  // 手掌干扰引发系统中断时干净收尾，不留坏状态
+  window.addEventListener('pointerup', function(e){ if (e.pointerId === activeId) endStroke(); });
+  canvas.addEventListener('pointercancel', endStroke);  // 系统中断时干净收尾，不留坏状态
+  // iOS 双保险：触摸层也拦住，防页面滚动/橡皮筋在书写中途抢走笔势
+  canvas.addEventListener('touchstart', function(e){ e.preventDefault(); }, {passive: false});
+  canvas.addEventListener('touchmove', function(e){ e.preventDefault(); }, {passive: false});
 
   card.querySelectorAll('.tool').forEach(function(btn){
     btn.addEventListener('pointerup', function(e){
