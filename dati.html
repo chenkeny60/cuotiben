@@ -19,8 +19,6 @@
   .tool { border:1px solid #d8deeb; background:#f2f5fb; border-radius:999px; padding:6px 13px; font-size:13.5px; cursor:pointer; }
   .tool.active { background:#6a4fd0; color:#fff; border-color:#6a4fd0; }
   .tool.export-big { display:block; width:100%; margin-top:10px; background:#1e7a3c; color:#fff; border-color:#1e7a3c; font-weight:700; font-size:15px; padding:11px; }
-  .qcard.locked .tool:not(.lockbtn) { pointer-events:none; opacity:.35; }
-  .qcard.locked .lockbtn { background:#b02a2a; border-color:#b02a2a; color:#fff; }
   .spacer { flex:1; }
   canvas.pad { width:100%; height:62vh; min-height:380px; display:block; border:1.5px solid #c9d4ee; border-radius:10px; background:#fff; touch-action:none; -webkit-touch-callout:none; -webkit-user-select:none; user-select:none; }
   .hint { color:#7a748f; font-size:12.5px; margin:8px 0 0; line-height:1.6; }
@@ -43,12 +41,10 @@
     <button class="tool eraser" data-tool="eraser">🧽 橡皮</button>
     <button class="tool undo">↩️ 撤销</button>
     <button class="tool clear">🗑 清空</button>
-    <span class="spacer"></span>
-    <button class="tool lockbtn">🔓 点此锁定防误触</button>
   </div>
   <canvas class="pad"></canvas>
   <button class="tool export-big">📤 写完导出图片（发微信判分）</button>
-  <p class="hint">写字前先点上面的“锁定防误触”：锁定后其他按钮全部失灵，手掌压到按钮也不会触发，只能用笔点锁定键解锁。画布只认 Apple Pencil 的痕迹，手掌贴着屏幕也没事（手指写不了，是故意的）。写完点下方绿色按钮导出图片，发到微信给我判分，题面会一起印在图片顶部。</p>
+  <p class="hint">所有按钮和画布都只认笔尖：手指和手掌点任何按钮都不会触发，写错了随时用笔点橡皮/撤销就行，不用解锁。画布也只记 Apple Pencil 的痕迹，手掌贴着屏幕随便写。写完点下方绿色按钮导出图片，发到微信给我判分，题面会一起印在图片顶部。</p>
 </section>
 <section class="qcard" data-idx="1" data-code="GS-002" data-question="设 f(x) 在 [0,3] 上连续，在 (0,3) 内可导，且 f(0)+f(2)=6，f(3)=3，证明：必存在一点 ξ∈(0,3)，使得 f′(ξ)=0。">
   <header>
@@ -62,12 +58,10 @@
     <button class="tool eraser" data-tool="eraser">🧽 橡皮</button>
     <button class="tool undo">↩️ 撤销</button>
     <button class="tool clear">🗑 清空</button>
-    <span class="spacer"></span>
-    <button class="tool lockbtn">🔓 点此锁定防误触</button>
   </div>
   <canvas class="pad"></canvas>
   <button class="tool export-big">📤 写完导出图片（发微信判分）</button>
-  <p class="hint">写字前先点上面的“锁定防误触”：锁定后其他按钮全部失灵，手掌压到按钮也不会触发，只能用笔点锁定键解锁。画布只认 Apple Pencil 的痕迹，手掌贴着屏幕也没事（手指写不了，是故意的）。写完点下方绿色按钮导出图片，发到微信给我判分，题面会一起印在图片顶部。</p>
+  <p class="hint">所有按钮和画布都只认笔尖：手指和手掌点任何按钮都不会触发，写错了随时用笔点橡皮/撤销就行，不用解锁。画布也只记 Apple Pencil 的痕迹，手掌贴着屏幕随便写。写完点下方绿色按钮导出图片，发到微信给我判分，题面会一起印在图片顶部。</p>
 </section>
   
   <footer>答题版与错题本同步生成 · 数据源：专升本高数错题本.xlsx</footer>
@@ -147,9 +141,12 @@ document.querySelectorAll('.qcard').forEach(function(card){
     ctx.beginPath(); ctx.arc(p[0], p[1], p[2]/2, 0, 7); ctx.fillStyle = '#1a1d26'; ctx.fill();
     ctx.restore();
   }
+  var activeId = null;   // 正在书写的笔的 pointerId，书写中途其他触点一律不理
   canvas.addEventListener('pointerdown', function(e){
     if (!isPen(e)) return;   // 手掌/手指（touch）一律忽略，只认 Apple Pencil
+    if (cur) return;         // 已有一笔在写，新的触点（手掌干扰）不许劫持
     e.preventDefault();
+    activeId = e.pointerId;
     canvas.setPointerCapture(e.pointerId);
     var p = pos(e);
     var w = (tool === 'eraser') ? 26 : (1.6 + (e.pressure || 0.5) * 3.2);
@@ -158,7 +155,7 @@ document.querySelectorAll('.qcard').forEach(function(card){
     drawDot(cur);
   });
   canvas.addEventListener('pointermove', function(e){
-    if (!cur || !isPen(e)) return;
+    if (!cur || !isPen(e) || e.pointerId !== activeId) return;
     e.preventDefault();
     var evs = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];
     evs.forEach(function(ev){
@@ -168,13 +165,13 @@ document.querySelectorAll('.qcard').forEach(function(card){
     });
     while (curDrawn < cur.pts.length) { drawSegment(cur, curDrawn); curDrawn++; }
   });
-  function endStroke(){ if (cur) { strokes.push(cur); cur = null; drawAll(); } }
-  canvas.addEventListener('pointerup', endStroke);
-  canvas.addEventListener('pointercancel', endStroke);
+  function endStroke(){ if (cur) { strokes.push(cur); cur = null; activeId = null; drawAll(); } }
+  canvas.addEventListener('pointerup', function(e){ if (e.pointerId === activeId) endStroke(); });
+  canvas.addEventListener('pointercancel', endStroke);  // 手掌干扰引发系统中断时干净收尾，不留坏状态
 
   card.querySelectorAll('.tool').forEach(function(btn){
-    if (btn.classList.contains('lockbtn')) return;  // 锁定键单独处理
-    btn.addEventListener('click', function(){
+    btn.addEventListener('pointerup', function(e){
+      if (!isPen(e)) return;  // 所有按钮只认笔尖/鼠标，手指和手掌点了不触发
       var t = btn.dataset.tool;
       if (t) {
         tool = t;
@@ -187,12 +184,6 @@ document.querySelectorAll('.qcard').forEach(function(card){
         exportImage();
       }
     });
-  });
-  var lockBtn = card.querySelector('.lockbtn');
-  lockBtn.addEventListener('pointerup', function(e){
-    if (e.pointerType === 'touch') return;  // 手指/手掌点不动锁定键，只能用笔或鼠标
-    var locked = card.classList.toggle('locked');
-    lockBtn.textContent = locked ? '🔒 已锁定（用笔点此解锁）' : '🔓 点此锁定防误触';
   });
 
   function exportImage(){
