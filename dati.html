@@ -19,7 +19,17 @@
   .toolbar { display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-bottom:8px; }
   .tool { border:1px solid #d8deeb; background:#f2f5fb; border-radius:999px; padding:6px 13px; font-size:13.5px; cursor:pointer; }
   .tool.active { background:#6a4fd0; color:#fff; border-color:#6a4fd0; }
-  .tool.export-big { display:block; width:100%; margin-top:10px; background:#1e7a3c; color:#fff; border-color:#1e7a3c; font-weight:700; font-size:15px; padding:11px; }
+  .tool.submit-big { display:block; width:100%; margin-top:10px; background:#6a4fd0; color:#fff; border-color:#6a4fd0; font-weight:700; font-size:15px; padding:11px; }
+  .tool.submit-big:disabled { opacity:.75; }
+  .tool.export-big { display:block; width:100%; margin-top:8px; background:#fff; color:#1e7a3c; border-color:#1e7a3c; font-weight:600; font-size:13.5px; padding:8px; }
+  .submit-msg { color:#6a4fd0; font-size:13.5px; margin:8px 0 0; line-height:1.6; }
+  .qcard { scroll-margin-top:12px; }
+  .qcard:target { outline:2.5px solid #6a4fd0; outline-offset:2px; }
+  .settings { background:#fff; border:1px solid #e2e7f2; border-radius:14px; padding:14px 16px; margin-bottom:18px; }
+  .settings-title { font-weight:700; font-size:14.5px; margin-bottom:4px; }
+  .settings-note { color:#5b6474; font-size:12.5px; line-height:1.6; margin:4px 0; }
+  .settings-row { display:flex; gap:8px; margin:8px 0 4px; }
+  .settings-row input { flex:1; border:1px solid #d8deeb; border-radius:999px; padding:7px 14px; font-size:13.5px; min-width:0; }
   .spacer { flex:1; }
   canvas.pad { width:100%; height:62vh; min-height:380px; display:block; border:1.5px solid #c9d4ee; border-radius:10px; background:#fff; touch-action:none; -webkit-touch-callout:none; -webkit-user-select:none; user-select:none; }
   .hint { color:#7a748f; font-size:12.5px; margin:8px 0 0; line-height:1.6; }
@@ -28,15 +38,24 @@
 </style></head>
 <body><div class="wrap">
   <h1>✏️ 答题版 · 待作答变式题</h1>
-  <div class="sub">闭卷手写，写完导出图片发微信判分 ｜ <a href="index.html">← 回错题本看卡片</a></div>
+  <div class="sub">闭卷手写，写完点「提交答案」直接发给我，今晚结算判分 ｜ <a href="index.html">← 回错题本看卡片</a></div>
+  <div class="settings" id="settings">
+    <div class="settings-title">⚙️ 提交设置（只需设置一次）</div>
+    <p class="settings-note" id="token-status">正在读取本机设置…</p>
+    <div class="settings-row">
+      <input id="token-input" type="password" placeholder="粘贴 GitHub 令牌（只存在这台设备里）" autocomplete="off">
+      <button id="token-save" class="tool">保存令牌</button>
+    </div>
+    <p class="settings-note">令牌只保存在这台设备的浏览器里，用来把答案图存进你的私有仓库 cuotiben-answers，我晚上结算时去那里取。没设置令牌也能做题，用「导出图片」发微信即可。</p>
+  </div>
   
-<section class="qcard" data-idx="0" data-code="GS-002" data-question="设 f(x) 在 [0,3] 上连续，在 (0,3) 内可导，且 f(0)+f(2)=6，f(3)=3，证明：必存在一点 ξ∈(0,3)，使得 f′(ξ)=0。">
+<section class="qcard" id="GS-001" data-idx="0" data-code="GS-001" data-question="设 0&lt;a&lt;b，证明 (b−a)/b &lt; ln(b/a) &lt; (b−a)/a。">
   <header>
-    <span class="code">GS-002</span>
-    <span class="module">中值定理（介值定理、罗尔定理）</span>
+    <span class="code">GS-001</span>
+    <span class="module">拉格朗日中值定理与不等式放缩</span>
     <span class="tag">变式题 · 待作答</span>
   </header>
-  <p class="qtext">设 f(x) 在 [0,3] 上连续，在 (0,3) 内可导，且 f(0)+f(2)=6，f(3)=3，证明：必存在一点 ξ∈(0,3)，使得 f′(ξ)=0。</p>
+  <p class="qtext">设 0&lt;a&lt;b，证明 (b−a)/b &lt; ln(b/a) &lt; (b−a)/a。</p>
   <div class="toolbar">
     <button class="tool pen active" data-tool="pen">✏️ 笔</button>
     <button class="tool eraser" data-tool="eraser">🧽 橡皮</button>
@@ -44,8 +63,29 @@
     <button class="tool clear">🗑 清空</button>
   </div>
   <canvas class="pad"></canvas>
-  <button class="tool export-big">📤 写完导出图片（发微信判分）</button>
-  <p class="hint">所有按钮和画布都只认笔尖：手指和手掌点任何按钮都不会触发，写错了随时用笔点橡皮/撤销就行，不用解锁。画布也只记 Apple Pencil 的痕迹，手掌贴着屏幕随便写。写完点下方绿色按钮导出图片，发到微信给我判分，题面会一起印在图片顶部。</p>
+  <button class="tool submit-big">📤 提交答案（直接发给我）</button>
+  <button class="tool export-big">导出图片（备用：提交失败时发微信）</button>
+  <p class="submit-msg"></p>
+  <p class="hint">所有按钮和画布都只认笔尖：手指和手掌点任何按钮都不会触发，写错了随时用笔点橡皮/撤销就行，不用解锁。画布也只记 Apple Pencil 的痕迹，手掌贴着屏幕随便写。写完点紫色「提交答案」，答案图会直接存到我这儿，今晚结算时判分，题面会一起印在图片顶部。提交需要先在页面顶部「提交设置」里粘贴一次令牌；没设置或提交失败时，用导出图片发微信也行。</p>
+</section>
+<section class="qcard" id="GS-002" data-idx="1" data-code="GS-002" data-question="设 f(x) 在 [0,4] 上连续，在 (0,4) 内可导，且 f(0)+f(3)=8，f(4)=4，证明：存在一点 ξ∈(0,4)，使得 f′(ξ)=0。">
+  <header>
+    <span class="code">GS-002</span>
+    <span class="module">中值定理（介值定理、罗尔定理）</span>
+    <span class="tag">变式题 · 待作答</span>
+  </header>
+  <p class="qtext">设 f(x) 在 [0,4] 上连续，在 (0,4) 内可导，且 f(0)+f(3)=8，f(4)=4，证明：存在一点 ξ∈(0,4)，使得 f′(ξ)=0。</p>
+  <div class="toolbar">
+    <button class="tool pen active" data-tool="pen">✏️ 笔</button>
+    <button class="tool eraser" data-tool="eraser">🧽 橡皮</button>
+    <button class="tool undo">↩️ 撤销</button>
+    <button class="tool clear">🗑 清空</button>
+  </div>
+  <canvas class="pad"></canvas>
+  <button class="tool submit-big">📤 提交答案（直接发给我）</button>
+  <button class="tool export-big">导出图片（备用：提交失败时发微信）</button>
+  <p class="submit-msg"></p>
+  <p class="hint">所有按钮和画布都只认笔尖：手指和手掌点任何按钮都不会触发，写错了随时用笔点橡皮/撤销就行，不用解锁。画布也只记 Apple Pencil 的痕迹，手掌贴着屏幕随便写。写完点紫色「提交答案」，答案图会直接存到我这儿，今晚结算时判分，题面会一起印在图片顶部。提交需要先在页面顶部「提交设置」里粘贴一次令牌；没设置或提交失败时，用导出图片发微信也行。</p>
 </section>
   
   <footer>答题版与错题本同步生成 · 数据源：专升本高数错题本.xlsx</footer>
@@ -168,13 +208,15 @@ document.querySelectorAll('.qcard').forEach(function(card){
         strokes.pop(); drawAll();
       } else if (btn.classList.contains('clear')) {
         if (confirm('清空这道题的全部笔迹？')) { strokes = []; drawAll(); }
+      } else if (btn.classList.contains('submit-big')) {
+        submitImage(btn);
       } else if (btn.classList.contains('export-big')) {
         exportImage();
       }
     });
   });
 
-  function exportImage(){
+  function buildOut(){
     var r = canvas.getBoundingClientRect();
     var S = 2;
     var headH = 120;
@@ -199,7 +241,10 @@ document.querySelectorAll('.qcard').forEach(function(card){
     var lc = layer.getContext('2d');
     strokes.forEach(function(s){ drawStrokeScaled(lc, s, S); });
     c.drawImage(layer, 0, headH*S);
-    out.toBlob(function(blob){
+    return out;
+  }
+  function exportImage(){
+    buildOut().toBlob(function(blob){
       var file = new File([blob], card.dataset.code + '-answer.png', {type: 'image/png'});
       if (navigator.canShare && navigator.canShare({files: [file]})) {
         navigator.share({files: [file], title: card.dataset.code + ' 变式题答案'}).catch(function(){});
@@ -210,6 +255,46 @@ document.querySelectorAll('.qcard').forEach(function(card){
         a.click();
         setTimeout(function(){ URL.revokeObjectURL(a.href); }, 4000);
       }
+    }, 'image/png');
+  }
+  function submitImage(btn){
+    var msg = card.querySelector('.submit-msg');
+    var token = localStorage.getItem('cuotiben_gh_token') || '';
+    if (!token) {
+      msg.textContent = '还没设置提交令牌：请先到页面顶部「提交设置」粘贴一次令牌；或者用下方导出图片发微信给我。';
+      document.getElementById('settings').scrollIntoView({behavior: 'smooth'});
+      return;
+    }
+    if (!strokes.length) { msg.textContent = '画布还是空的，先写完再提交。'; return; }
+    btn.disabled = true;
+    var oldText = btn.textContent;
+    btn.textContent = '正在提交…';
+    msg.textContent = '';
+    buildOut().toBlob(function(blob){
+      var reader = new FileReader();
+      reader.onload = function(){
+        var b64 = String(reader.result).split(',')[1];
+        var now = new Date();
+        function p2(n){ return String(n).padStart(2, '0'); }
+        var fname = 'answers/' + card.dataset.code + '-' + now.getFullYear() + p2(now.getMonth() + 1) + p2(now.getDate()) + '-' + p2(now.getHours()) + p2(now.getMinutes()) + p2(now.getSeconds()) + '.png';
+        fetch('https://api.github.com/repos/chenkeny60/cuotiben-answers/contents/' + fname, {
+          method: 'PUT',
+          headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github+json' },
+          body: JSON.stringify({ message: 'answer ' + card.dataset.code, content: b64 })
+        }).then(function(resp){
+          if (resp.ok) {
+            btn.textContent = '✅ 已提交，今晚结算时判分';
+            msg.textContent = '提交成功，答案已经直接存到我这边了。';
+          } else {
+            btn.disabled = false; btn.textContent = oldText;
+            msg.textContent = '提交失败（状态 ' + resp.status + '）。可能是令牌不对或已过期；也可以用下方导出图片发微信给我。';
+          }
+        }).catch(function(){
+          btn.disabled = false; btn.textContent = oldText;
+          msg.textContent = '提交失败（网络问题）。可以用下方导出图片发微信给我。';
+        });
+      };
+      reader.readAsDataURL(blob);
     }, 'image/png');
   }
   function drawStrokeScaled(c, s, scale){
@@ -243,5 +328,23 @@ document.querySelectorAll('.qcard').forEach(function(card){
   window.addEventListener('resize', resize);
   resize();
 });
+</script>
+<script>
+(function(){
+  var input = document.getElementById('token-input');
+  var status = document.getElementById('token-status');
+  if (!input || !status) return;
+  function refresh(){
+    var t = localStorage.getItem('cuotiben_gh_token') || '';
+    status.textContent = t ? '✅ 本机已保存令牌，可以直接点提交。' : '尚未设置令牌：粘贴后点保存，只需一次。';
+    input.placeholder = t ? '已保存（要更换就粘贴新令牌）' : '粘贴 GitHub 令牌（只存在这台设备里）';
+  }
+  document.getElementById('token-save').addEventListener('click', function(){
+    var v = input.value.trim();
+    if (v) { localStorage.setItem('cuotiben_gh_token', v); input.value = ''; }
+    refresh();
+  });
+  refresh();
+})();
 </script>
 </body></html>
