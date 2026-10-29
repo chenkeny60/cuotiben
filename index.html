@@ -37,6 +37,7 @@
   .memo { background:#fffbe8; border:1px solid #f0e3ac; }
   .var { background:#faf7ff; border:1.5px dashed #b9a7e6; }
   .var-status { float:right; font-size:12px; color:#6a4fd0; }
+  .go-answer { display:inline-block; margin-top:6px; background:#6a4fd0; color:#fff !important; font-weight:700; font-size:14px; border-radius:999px; padding:7px 16px; text-decoration:none; }
   .hint { color:#7a748f; font-size:12.5px !important; }
   mark.bad { background:#ffd9d9; color:#a11717; border-radius:3px; padding:0 2px; }
   .flow { display:flex; flex-wrap:wrap; align-items:center; gap:4px; margin:6px 0 8px; }
@@ -49,8 +50,12 @@
   <div class="sub">目标：2027 四川统招专升本 400+ ｜ 复习规则：先闭卷做变式题，做对才算过，没过回看原题正确解法 ｜ <a href="dati.html" style="color:#2f5fd0;font-weight:700;">✏️ 去答题版（iPad 手写作答）</a></div>
   <div class="stats">
     <span class="stat">共 <b>2</b> 题</span>
-    <span class="stat">未掌握 <b>1</b> 题</span>
-    <span class="stat">最近复习日 <b>2026-10-25</b></span>
+    <span class="stat">未掌握 <b>0</b> 题</span>
+    <span class="stat">半掌握 <b>2</b> 题</span>
+    <span class="stat">已掌握 <b>0</b> 题</span>
+    <span class="stat">待作答变式 <b>2</b> 道</span>
+    <span class="stat">最近复习日 <b>2026-10-29</b></span>
+    <span class="stat">复习排期 <b style="font-size:13px;">GS-001（2026-10-29）、GS-002（2026-10-29）</b></span>
   </div>
   
 <details class="card">
@@ -84,9 +89,10 @@
     <p>a²+b²≥2ab；(ln b−ln a)/(b−a)=1/ξ（ξ∈(a,b)）；ξ 越小 1/ξ 越大，放缩取倒数注意方向翻转</p>
   </div>
   <div class="sec var">
-      <div class="sec-title">🔁 变式题（先闭卷做它）<span class="var-status">已答对</span></div>
-      <p>设 0&lt;a&lt;b，证明 2(b−a)/(a+b) &lt; ln(b/a)。</p>
-      <p class="hint">做完把答案发到微信，我来判分；参考答案只存档，不公布。</p>
+      <div class="sec-title">🔁 变式题（先闭卷做它）<span class="var-status">待作答</span></div>
+      <p>设 0&lt;a&lt;b，证明 (b−a)/b &lt; ln(b/a) &lt; (b−a)/a。</p>
+      <a class="go-answer" href="dati.html#GS-001">✏️ 去做这道变式题 →</a>
+      <p class="hint">点过去在答题页手写，写完点「提交」我直接收到，晚上结算判分；参考答案只存档，不公布。</p>
     </div>
 </details>
 <details class="card">
@@ -94,8 +100,8 @@
     <span class="code">GS-002</span>
     <span class="module">中值定理（介值定理、罗尔定理）</span>
     <span class="tag tag-err">错因 · 方法选择</span>
-    <span class="tag m-bad">未掌握</span>
-    <span class="tag tag-date">复习 · 2026-10-25</span>
+    <span class="tag m-mid">半掌握</span>
+    <span class="tag tag-date">复习 · 2026-10-29</span>
     <span class="toggle-hint"><span class="h-open">展开详情 ▾</span><span class="h-close">收起 ▴</span></span>
   </summary>
   <div class="sec prob">
@@ -121,8 +127,9 @@
   </div>
   <div class="sec var">
       <div class="sec-title">🔁 变式题（先闭卷做它）<span class="var-status">待作答</span></div>
-      <p>设 f(x) 在 [0,3] 上连续，在 (0,3) 内可导，且 f(0)+f(2)=6，f(3)=3，证明：必存在一点 ξ∈(0,3)，使得 f′(ξ)=0。</p>
-      <p class="hint">做完把答案发到微信，我来判分；参考答案只存档，不公布。</p>
+      <p>设 f(x) 在 [0,4] 上连续，在 (0,4) 内可导，且 f(0)+f(3)=8，f(4)=4，证明：存在一点 ξ∈(0,4)，使得 f′(ξ)=0。</p>
+      <a class="go-answer" href="dati.html#GS-002">✏️ 去做这道变式题 →</a>
+      <p class="hint">点过去在答题页手写，写完点「提交」我直接收到，晚上结算判分；参考答案只存档，不公布。</p>
     </div>
 </details>
   <footer>图文版与 Excel 错题本同步生成 · 数据源：专升本高数错题本.xlsx</footer>
