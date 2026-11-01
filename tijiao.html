@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>提交新错题 · 高数错题本</title>
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body { margin:0; font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif; background:#f4f6fb; color:#1f2430; }
+  .wrap { max-width:860px; margin:0 auto; padding:18px 12px 44px; }
+  h1 { font-size:21px; margin:4px 0; }
+  .sub { color:#5b6474; font-size:13px; margin-bottom:14px; line-height:1.7; }
+  .sub a { color:#2f5fd0; font-weight:700; }
+  .card { background:#fff; border:1px solid #e2e7f2; border-radius:14px; padding:16px; margin-bottom:18px; box-shadow:0 2px 10px rgba(31,45,90,.05); }
+  .settings-title, .card-title { font-weight:700; font-size:14.5px; margin-bottom:4px; }
+  .note { color:#5b6474; font-size:12.5px; line-height:1.6; margin:4px 0; }
+  .settings-row { display:flex; gap:8px; margin:8px 0 4px; }
+  .settings-row input { flex:1; border:1px solid #d8deeb; border-radius:999px; padding:7px 14px; font-size:13.5px; min-width:0; }
+  .tool { border:1px solid #d8deeb; background:#f2f5fb; border-radius:999px; padding:6px 13px; font-size:13.5px; cursor:pointer; }
+  .pick { display:block; width:100%; text-align:center; border:1.5px dashed #6a4fd0; color:#6a4fd0; background:#f2efff; border-radius:12px; padding:18px 10px; font-size:15px; font-weight:700; cursor:pointer; }
+  .previews { display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
+  .pv { position:relative; width:31%; min-width:96px; }
+  .pv img { width:100%; border-radius:10px; border:1px solid #d8deeb; display:block; }
+  .pv .rm { position:absolute; top:-8px; right:-8px; width:26px; height:26px; border-radius:50%; border:none; background:#d33; color:#fff; font-size:15px; line-height:1; cursor:pointer; }
+  .pv .idx { position:absolute; left:6px; bottom:6px; background:rgba(0,0,0,.55); color:#fff; font-size:11px; border-radius:6px; padding:1px 6px; }
+  textarea { width:100%; border:1px solid #d8deeb; border-radius:10px; padding:10px 12px; font-size:14px; min-height:64px; font-family:inherit; margin-top:6px; }
+  .submit-big { display:block; width:100%; margin-top:14px; background:#6a4fd0; color:#fff; border:1px solid #6a4fd0; border-radius:999px; font-weight:700; font-size:15.5px; padding:12px; cursor:pointer; }
+  .submit-big:disabled { opacity:.75; }
+  .submit-msg { color:#6a4fd0; font-size:13.5px; margin:10px 0 0; line-height:1.6; }
+  footer { color:#8a93a5; font-size:12px; text-align:center; }
+</style></head>
+<body><div class="wrap">
+  <h1>➕ 提交新错题</h1>
+  <div class="sub">把新错题的照片传到这里就行，不用再发微信 ｜ <a href="index.html">← 回错题本主页</a> ｜ <a href="dati.html">✏️ 去答题版</a></div>
+
+  <div class="card" id="settings">
+    <div class="settings-title">⚙️ 提交设置（只需设置一次）</div>
+    <p class="note" id="token-status">正在读取本机设置…</p>
+    <div class="settings-row">
+      <input id="token-input" type="password" placeholder="粘贴 GitHub 令牌（只存在这台设备里）" autocomplete="off">
+      <button id="token-save" class="tool">保存令牌</button>
+    </div>
+    <p class="note">和答题页共用同一个令牌：如果答题页已经设置过，这里会直接显示已保存，不用再填。令牌只保存在这台设备的浏览器里，用来把照片存进你的私有仓库。</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">一张新错题 = 一次提交</div>
+    <p class="note">点下面选照片：一道题的照片一次全选上（原题、参考答案、你自己的解题步骤，有几张选几张）。图片会自动压到看得清字迹的大小再传，不用你处理。传完今晚 21 点结算时，我按七步法分析（独立推导核对答案 → 定位错因 → 正确解法 → 变式题），入错题本并刷新主页，第二天就能在主页看到新卡。</p>
+    <label class="pick" for="file-input">📷 选择这道题的照片（可多选）</label>
+    <input id="file-input" type="file" accept="image/*" multiple style="display:none">
+    <div class="previews" id="previews"></div>
+    <textarea id="note-input" placeholder="备注（可不填）：比如哪张是你的步骤、这道题卡在哪一步"></textarea>
+    <button class="submit-big" id="submit-btn">📤 提交这道错题</button>
+    <p class="submit-msg" id="submit-msg"></p>
+    <p class="note">下一道题再点一次「选择照片」重新来一轮就行，一次提交只放一道题，别把两道题的照片混在一起。</p>
+  </div>
+
+  <footer>提交的新错题存入私有仓库 cuotiben-answers 的 new-questions/ 目录 · 每晚 21:00 结算时分析入账</footer>
+</div>
+<script>
+(function(){
+  var files = [];
+  var previews = document.getElementById('previews');
+  var msg = document.getElementById('submit-msg');
+  var btn = document.getElementById('submit-btn');
+
+  function render(){
+    previews.innerHTML = '';
+    files.forEach(function(f, i){
+      var d = document.createElement('div'); d.className = 'pv';
+      var img = document.createElement('img'); img.src = URL.createObjectURL(f);
+      var rm = document.createElement('button'); rm.className = 'rm'; rm.textContent = '×';
+      rm.addEventListener('click', function(){ files.splice(i, 1); render(); });
+      var idx = document.createElement('span'); idx.className = 'idx'; idx.textContent = '第 ' + (i + 1) + ' 张';
+      d.appendChild(img); d.appendChild(rm); d.appendChild(idx);
+      previews.appendChild(d);
+    });
+  }
+  document.getElementById('file-input').addEventListener('change', function(e){
+    for (var i = 0; i < e.target.files.length; i++) files.push(e.target.files[i]);
+    e.target.value = '';
+    render();
+    msg.textContent = files.length ? '已选 ' + files.length + ' 张照片，确认无误就点下面提交。' : '';
+  });
+
+  function p2(n){ return String(n).padStart(2, '0'); }
+  function stamp(){
+    var now = new Date();
+    return now.getFullYear() + p2(now.getMonth() + 1) + p2(now.getDate()) + '-' + p2(now.getHours()) + p2(now.getMinutes()) + p2(now.getSeconds());
+  }
+  function shrinkToJpeg(file){
+    return new Promise(function(resolve, reject){
+      var url = URL.createObjectURL(file);
+      var img = new Image();
+      img.onload = function(){
+        var MAX = 1600;
+        var w = img.naturalWidth, h = img.naturalHeight;
+        var s = Math.min(1, MAX / Math.max(w, h));
+        var cw = Math.round(w * s), ch = Math.round(h * s);
+        var c = document.createElement('canvas'); c.width = cw; c.height = ch;
+        var ctx = c.getContext('2d');
+        ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, cw, ch);
+        ctx.drawImage(img, 0, 0, cw, ch);
+        URL.revokeObjectURL(url);
+        c.toBlob(function(b){ b ? resolve(b) : reject(new Error('图片处理失败')); }, 'image/jpeg', 0.85);
+      };
+      img.onerror = function(){ URL.revokeObjectURL(url); reject(new Error('有一张图片读不出来')); };
+      img.src = url;
+    });
+  }
+  function putFile(token, path, b64, message){
+    return fetch('https://api.github.com/repos/chenkeny60/cuotiben-answers/contents/' + path, {
+      method: 'PUT',
+      headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github+json' },
+      body: JSON.stringify({ message: message, content: b64 })
+    }).then(function(resp){
+      if (!resp.ok) throw new Error('状态 ' + resp.status);
+      return resp;
+    });
+  }
+  function blobToB64(blob){
+    return new Promise(function(resolve){
+      var r = new FileReader();
+      r.onload = function(){ resolve(String(r.result).split(',')[1]); };
+      r.readAsDataURL(blob);
+    });
+  }
+
+  btn.addEventListener('click', function(){
+    var token = localStorage.getItem('cuotiben_gh_token') || '';
+    if (!token) {
+      msg.textContent = '还没设置提交令牌：请先到页面顶部「提交设置」粘贴一次令牌（和答题页同一个）。';
+      document.getElementById('settings').scrollIntoView({behavior: 'smooth'});
+      return;
+    }
+    if (!files.length) { msg.textContent = '还没选照片：先点上面的虚线框选这道题的照片。'; return; }
+    btn.disabled = true;
+    var oldText = btn.textContent;
+    var prefix = 'CT-' + stamp();
+    var note = document.getElementById('note-input').value.trim();
+    var jobs = files.map(function(f, i){
+      return shrinkToJpeg(f)
+        .then(blobToB64)
+        .then(function(b64){ return putFile(token, 'new-questions/' + prefix + '-' + (i + 1) + '.jpg', b64, 'new question ' + prefix); });
+    });
+    if (note) {
+      var noteB64 = btoa(unescape(encodeURIComponent(note)));
+      jobs.push(putFile(token, 'new-questions/' + prefix + '-note.txt', noteB64, 'note ' + prefix));
+    }
+    var done = 0;
+    msg.textContent = '正在提交…';
+    Promise.all(jobs.map(function(j){
+      return j.then(function(){ done++; msg.textContent = '正在提交…已传 ' + done + ' / ' + jobs.length; });
+    })).then(function(){
+      btn.textContent = '✅ 已提交，今晚结算时分析入账';
+      msg.textContent = '提交成功：这道题的 ' + files.length + ' 张照片已经直接存到我这边了。今晚 21 点我按七步法分析、入错题本、配变式题，刷完主页你就能看到新卡。要再交下一道，刷新页面再来一轮。';
+      files = []; render();
+      document.getElementById('note-input').value = '';
+      btn.disabled = false;
+      setTimeout(function(){ btn.textContent = oldText; }, 6000);
+    }).catch(function(err){
+      btn.disabled = false; btn.textContent = oldText;
+      msg.textContent = '提交失败（' + err.message + '）。可能是令牌不对/已过期或网络问题；急的话也可以把照片发微信给我，我照样入账。';
+    });
+  });
+})();
+</script>
+<script>
+(function(){
+  var input = document.getElementById('token-input');
+  var status = document.getElementById('token-status');
+  if (!input || !status) return;
+  function refresh(){
+    var t = localStorage.getItem('cuotiben_gh_token') || '';
+    status.textContent = t ? '✅ 本机已保存令牌，可以直接提交。' : '尚未设置令牌：粘贴后点保存，只需一次。';
+    input.placeholder = t ? '已保存（要更换就粘贴新令牌）' : '粘贴 GitHub 令牌（只存在这台设备里）';
+  }
+  document.getElementById('token-save').addEventListener('click', function(){
+    var v = input.value.trim();
+    if (v) { localStorage.setItem('cuotiben_gh_token', v); input.value = ''; }
+    refresh();
+  });
+  refresh();
+})();
+</script>
+</body></html>
