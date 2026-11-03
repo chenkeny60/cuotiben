@@ -127,7 +127,7 @@
   btn.addEventListener('click', function(){
     var token = localStorage.getItem('cuotiben_gh_token') || '';
     if (!token) {
-      msg.textContent = '还没设置提交令牌：请先到页面顶部「提交设置」粘贴一次令牌（和答题页同一个）。';
+      msg.textContent = '这个浏览器还没存令牌：请改用当时能提交成功的那个入口打开（三个页面共用同一个令牌），或在页面顶部粘贴一次。';
       document.getElementById('settings').scrollIntoView({behavior: 'smooth'});
       return;
     }
@@ -170,7 +170,7 @@
   if (!input || !status) return;
   function refresh(){
     var t = localStorage.getItem('cuotiben_gh_token') || '';
-    status.textContent = t ? '✅ 本机已保存令牌，可以直接提交。' : '尚未设置令牌：粘贴后点保存，只需一次。';
+    status.textContent = t ? '✅ 本机已保存令牌，可以直接提交。' : '⚠️ 这个浏览器还没存令牌。令牌只存在你当初填的那个浏览器里，换入口打开就要重填：请改用当时能提交成功的那个入口打开（三个页面共用），就不用填；实在找不到，再在这里粘贴保存。';
     input.placeholder = t ? '已保存（要更换就粘贴新令牌）' : '粘贴 GitHub 令牌（只存在这台设备里）';
   }
   document.getElementById('token-save').addEventListener('click', function(){
