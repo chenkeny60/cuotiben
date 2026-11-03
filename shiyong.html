@@ -27,12 +27,15 @@
   .submit { display:block; width:100%; margin-top:12px; background:#2f5fd0; color:#fff; border:1px solid #2f5fd0; border-radius:999px; font-weight:700; font-size:15px; padding:11px; cursor:pointer; }
   .submit:disabled { opacity:.7; }
   .msg { color:#2f5fd0; font-size:13.5px; margin:8px 0 0; line-height:1.6; }
+  .skip { display:block; width:100%; margin-top:8px; background:#fff; color:#5b6474; border:1px solid #d8deeb; border-radius:999px; font-size:13.5px; padding:9px; cursor:pointer; }
+  .lookup { display:block; margin-top:10px; font-size:13.5px; color:#5b6474; cursor:pointer; }
+  .lookup input { margin-right:6px; }
   footer { color:#8a93a5; font-size:12px; text-align:center; }
 </style></head>
 <body><div class="wrap">
   <h1>🧪 一周试用 · 计算机三考点</h1>
   <div class="sub">每天 3 道，只做当天那一组，做完就提交，不用等晚上一起交 ｜ <a href="index.html">← 回错题本主页</a> ｜ <a href="dati.html">✏️ 答题版</a> ｜ <a href="tijiao.html">➕ 提交新错题</a></div>
-  <div class="sub">选择题、判断题、排序题、配对题：直接在页面上选好点提交。填空题和写出题：在纸上或 iPad 上写好，拍照上传。提交后今晚 21:00 我统一判分、记账，第二天在主聊天告诉你结果。</div>
+  <div class="sub">选择题、判断题、排序题、配对题：直接在页面上选好点提交。填空题和写出题：在纸上或 iPad 上写好，拍照上传。提交后今晚 21:00 我统一判分、记账，第二天在主聊天告诉你结果。不会的题不用硬猜：点题目下面的「不会这道」就行，记下来就是有效信息。可以查资料，但查过的题勾一下「查过资料」——那种只算练过，不算闭卷证据。</div>
 
   <div class="card" id="settings">
     <div class="settings-title">⚙️ 提交设置（只需设置一次）</div>
@@ -128,7 +131,14 @@ var QUESTIONS = [{"day": 1, "id": "S-0302-1", "type": "choice", "stem": "下列�
     var btn = document.createElement('button'); btn.className = 'submit'; btn.textContent = '提交这道题';
     var msg = document.createElement('p'); msg.className = 'msg';
     btn.addEventListener('click', function(){ submit(q, box, btn, msg); });
-    box.appendChild(btn); box.appendChild(msg);
+    box.appendChild(btn);
+    var lk = document.createElement('label'); lk.className = 'lookup';
+    var cb = document.createElement('input'); cb.type = 'checkbox'; cb.id = 'chk-' + q.id;
+    lk.appendChild(cb); lk.appendChild(document.createTextNode('这道题我查过资料 / 看过提示'));
+    box.appendChild(lk);
+    var skip = document.createElement('button'); skip.className = 'skip'; skip.textContent = '不会这道，直接记下来';
+    skip.addEventListener('click', function(){ submitSkip(q, box, skip, msg); });
+    box.appendChild(skip); box.appendChild(msg);
     return box;
   }
 
@@ -198,6 +208,27 @@ var QUESTIONS = [{"day": 1, "id": "S-0302-1", "type": "choice", "stem": "下列�
   }
   function textToB64(text){ return btoa(unescape(encodeURIComponent(text))); }
 
+  function submitSkip(q, box, btn, msg){
+    var token = localStorage.getItem('cuotiben_gh_token') || '';
+    if (!token) {
+      msg.textContent = '还没设置提交令牌：先到页面顶部「提交设置」粘贴一次令牌（和答题页同一个）。';
+      document.getElementById('settings').scrollIntoView({behavior: 'smooth'});
+      return;
+    }
+    btn.disabled = true;
+    var old = btn.textContent;
+    msg.textContent = '正在提交…';
+    var lkEl = document.getElementById('chk-' + q.id);
+    var content = 'day=' + q.day + ' id=' + q.id + ' type=' + q.type + ' answer=不会' + ((lkEl && lkEl.checked) ? ' lookup=1' : '');
+    putFile(token, 'trial/D' + q.day + '-' + q.id + '-' + stamp() + '.txt', textToB64(content), 'trial skip ' + q.id).then(function(){
+      btn.textContent = '✅ 已记下：这道不会';
+      msg.textContent = '记好了。不会很正常，试用就是测这个的，今晚结算会如实记账。';
+    }).catch(function(err){
+      btn.disabled = false; btn.textContent = old;
+      msg.textContent = '提交失败（' + err.message + '）。可能是令牌不对/已过期或网络问题。';
+    });
+  }
+
   function submit(q, box, btn, msg){
     var token = localStorage.getItem('cuotiben_gh_token') || '';
     if (!token) {
@@ -219,6 +250,11 @@ var QUESTIONS = [{"day": 1, "id": "S-0302-1", "type": "choice", "stem": "下列�
       shrinkToJpeg(inp.files[0]).then(blobToB64).then(function(b64){
         return putFile(token, base + '.jpg', b64, 'trial ' + q.id);
       }).then(function(){
+        var lkEl = document.getElementById('chk-' + q.id);
+        if (lkEl && lkEl.checked) {
+          return putFile(token, base + '-flag.txt', textToB64('day=' + q.day + ' id=' + q.id + ' lookup=1'), 'trial flag ' + q.id);
+        }
+      }).then(function(){
         btn.textContent = '✅ 已提交，今晚 21:00 判分';
         msg.textContent = '提交成功，照片已经存到我这边了。';
       }).catch(fail);
@@ -226,7 +262,8 @@ var QUESTIONS = [{"day": 1, "id": "S-0302-1", "type": "choice", "stem": "下列�
       var ans = getAnswer(q, box);
       if (!ans) { btn.disabled = false; msg.textContent = '还没选完：把这道题的选项都选好再提交。'; return; }
       msg.textContent = '正在提交…';
-      var content = 'day=' + q.day + ' id=' + q.id + ' type=' + q.type + ' answer=' + ans;
+      var lkEl = document.getElementById('chk-' + q.id);
+      var content = 'day=' + q.day + ' id=' + q.id + ' type=' + q.type + ' answer=' + ans + ((lkEl && lkEl.checked) ? ' lookup=1' : '');
       putFile(token, base + '.txt', textToB64(content), 'trial ' + q.id).then(function(){
         btn.textContent = '✅ 已提交，今晚 21:00 判分';
         msg.textContent = '提交成功，你的答案已经存到我这边了。';
