@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>一周试用 · 计算机三考点</title>
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body { margin:0; font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif; background:#f4f6fb; color:#1f2430; }
+  .wrap { max-width:860px; margin:0 auto; padding:18px 12px 44px; }
+  h1 { font-size:21px; margin:4px 0; }
+  .sub { color:#5b6474; font-size:13px; margin-bottom:14px; line-height:1.7; }
+  .sub a { color:#2f5fd0; font-weight:700; }
+  .card { background:#fff; border:1px solid #e2e7f2; border-radius:14px; padding:16px; margin-bottom:16px; box-shadow:0 2px 10px rgba(31,45,90,.05); }
+  .settings-title, .day-title { font-weight:700; font-size:16px; margin-bottom:6px; }
+  .q-title { font-weight:700; font-size:14.5px; margin-bottom:4px; }
+  .note { color:#5b6474; font-size:12.5px; line-height:1.6; margin:4px 0; }
+  .stem { font-size:15px; line-height:1.75; margin:6px 0 10px; }
+  .settings-row { display:flex; gap:8px; margin:8px 0 4px; }
+  .settings-row input { flex:1; border:1px solid #d8deeb; border-radius:999px; padding:7px 14px; font-size:13.5px; min-width:0; }
+  .tool { border:1px solid #d8deeb; background:#f2f5fb; border-radius:999px; padding:6px 13px; font-size:13.5px; cursor:pointer; }
+  .opt { display:block; border:1px solid #d8deeb; border-radius:10px; padding:10px 12px; margin:7px 0; font-size:14.5px; cursor:pointer; background:#fbfcfe; }
+  .opt input { margin-right:8px; }
+  .opt.sel { border-color:#2f5fd0; background:#eef3ff; }
+  .selrow { display:flex; align-items:center; gap:8px; margin:7px 0; font-size:14px; }
+  .selrow select { flex:1; font-size:14.5px; padding:8px; border:1px solid #d8deeb; border-radius:10px; min-width:0; background:#fff; }
+  .pick { display:block; width:100%; text-align:center; border:1.5px dashed #6a4fd0; color:#6a4fd0; background:#f2efff; border-radius:12px; padding:15px 10px; font-size:14.5px; font-weight:700; cursor:pointer; }
+  .pv img { width:100%; border-radius:10px; border:1px solid #d8deeb; display:block; margin-top:10px; }
+  .submit { display:block; width:100%; margin-top:12px; background:#2f5fd0; color:#fff; border:1px solid #2f5fd0; border-radius:999px; font-weight:700; font-size:15px; padding:11px; cursor:pointer; }
+  .submit:disabled { opacity:.7; }
+  .msg { color:#2f5fd0; font-size:13.5px; margin:8px 0 0; line-height:1.6; }
+  footer { color:#8a93a5; font-size:12px; text-align:center; }
+</style></head>
+<body><div class="wrap">
+  <h1>🧪 一周试用 · 计算机三考点</h1>
+  <div class="sub">每天 3 道，只做当天那一组，做完就提交，不用等晚上一起交 ｜ <a href="index.html">← 回错题本主页</a> ｜ <a href="dati.html">✏️ 答题版</a> ｜ <a href="tijiao.html">➕ 提交新错题</a></div>
+  <div class="sub">选择题、判断题、排序题、配对题：直接在页面上选好点提交。填空题和写出题：在纸上或 iPad 上写好，拍照上传。提交后今晚 21:00 我统一判分、记账，第二天在主聊天告诉你结果。</div>
+
+  <div class="card" id="settings">
+    <div class="settings-title">⚙️ 提交设置（只需设置一次）</div>
+    <p class="note" id="token-status">正在读取本机设置…</p>
+    <div class="settings-row">
+      <input id="token-input" type="password" placeholder="粘贴 GitHub 令牌（只存在这台设备里）" autocomplete="off">
+      <button id="token-save" class="tool">保存令牌</button>
+    </div>
+    <p class="note">和答题页、提交错题页共用同一个令牌：那边设置过，这里会自动显示已保存。</p>
+  </div>
+
+  <div id="days"></div>
+
+  <footer>试用答案存入私有仓库 cuotiben-answers 的 trial/ 目录 · 每晚 21:00 结算时判分记账 · 题目均为自编练习题</footer>
+</div>
+<script>
+var QUESTIONS = [{"day": 1, "id": "S-0302-1", "type": "choice", "stem": "下列对操作系统地位的描述最准确的是：", "extra": ["操作系统是用户直接使用的应用软件", "操作系统是最靠近硬件的系统软件，管理计算机的软硬件资源并为用户提供使用接口", "操作系统只是负责开机启动的程序", "操作系统就是 Windows 的同义词"]}, {"day": 1, "id": "S-0306-1", "type": "choice", "stem": "下列不属于文件管理基本功能的是：", "extra": ["文件的组织与存储", "文件的检索", "文件的创建、删除与更名", "操作系统内核的进程调度与时间片分配"]}, {"day": 1, "id": "S-0315-1", "type": "photo", "stem": "写出：在同一磁盘分区内，把文件 F 从甲文件夹「剪切」后到乙文件夹「粘贴」，甲文件夹中 F ＿＿＿＿；若改用「复制—粘贴」，甲文件夹中 F ＿＿＿＿。", "extra": null}, {"day": 2, "id": "S-0302-2", "type": "photo", "stem": "填空：操作系统最基本的两个特征是＿＿性与共享性，二者是虚拟性、异步性的基础。", "extra": null}, {"day": 2, "id": "S-0306-2", "type": "photo", "stem": "填空：文件管理主要解决文件信息的组织、存储、检索、＿＿与＿＿等问题。", "extra": null}, {"day": 2, "id": "S-0315-3", "type": "order", "stem": "排序：误删文件后的恢复操作，正确顺序是：", "extra": ["①在原位置确认文件已恢复", "②打开回收站", "③选中被删文件并执行「还原」"]}, {"day": 3, "id": "S-0302-3", "type": "order", "stem": "排序：将下列操作系统发展阶段按出现先后排列：", "extra": ["①分时系统", "②手工操作阶段", "③多道批处理系统", "④单道批处理系统"]}, {"day": 3, "id": "S-0306-6", "type": "photo", "stem": "填空：用户使用文件时是＿＿存取，即只需给出文件名，不必知道文件在磁盘上的物理存放位置，这是文件管理提供的基本存取方式。", "extra": null}, {"day": 3, "id": "S-0315-2", "type": "choice", "stem": "把 C 盘文件「剪切」后，在粘贴到 D 盘之前按 Esc 取消了操作。此时该文件：", "extra": ["已在 D 盘", "已被删除", "仍在 C 盘源位置、未移动", "在 C、D 两盘各有一份"]}, {"day": 4, "id": "S-0302-8", "type": "choice", "stem": "下列任务中，属于操作系统职责的是：", "extra": ["给文档排版", "管理内存的分配与回收", "计算表格中的公式", "给图片调色"]}, {"day": 4, "id": "S-0306-5", "type": "pair", "stem": "配对：将管理对象与负责的操作系统功能对应：", "extra": {"left": ["A 程序运行时的地址映射与内存保护", "B 文件的目录组织与按名检索", "C 处理器时间的分配", "D 打印机等外设的共享使用"], "right": ["甲 处理器管理", "乙 存储器管理", "丙 文件管理", "丁 设备管理"]}}, {"day": 4, "id": "S-0315-4", "type": "photo", "stem": "填空：桌面上一个图标带有小箭头、文件大小只有几 KB，双击它却能打开 D 盘里的一份大文档。这个图标文件是该文档的＿＿，删除它对原文档＿＿（有/没有）影响。", "extra": null}, {"day": 5, "id": "S-0302-5", "type": "choice", "stem": "核电站控制系统要求对异常信号在毫秒级时限内作出处理、超时将造成事故。这类系统应采用：", "extra": ["批处理", "分时", "实时", "个人计算机操作系统"]}, {"day": 5, "id": "S-0306-4", "type": "choice", "stem": "教研室多位老师需要安全地共同使用同一批试卷文件，既要能共享打开、又要防止误删和越权修改。这主要依赖操作系统五大功能中的：", "extra": ["处理器管理", "存储器管理", "文件管理", "设备管理"]}, {"day": 5, "id": "S-0315-5", "type": "choice", "stem": "一个文件夹里有几百个文件，要快速找出上周修改过的全部 Word 文档，最合适的做法是：", "extra": ["逐个打开检查", "在资源管理器中按修改日期排序并结合类型筛选/搜索", "把文件全部复制到桌面再找", "按文件名首字母排序"]}, {"day": 6, "id": "S-0302-6", "type": "photo", "stem": "写出：用一句话分别指出分时系统与实时系统的关键区别。", "extra": null}, {"day": 6, "id": "S-0306-7", "type": "order", "stem": "排序：用户按名存取一个文件的一般过程是：", "extra": ["①操作系统按目录记录找到文件的存放位置", "②用户给出文件名并提出读/写要求", "③操作系统按位置读写文件数据"]}, {"day": 6, "id": "S-0315-7", "type": "photo", "stem": "补全：把文件从甲文件夹移动到乙文件夹：选中文件 → 执行「＿＿」→ 打开乙文件夹 → 执行「粘贴」。", "extra": null}, {"day": 7, "id": "S-0302-7", "type": "choice", "stem": "研究所每天把成千上万条实验数据集中成批计算、不要求即时交互。这类处理方式属于：", "extra": ["实时", "批处理", "分时", "多任务个人系统"]}, {"day": 7, "id": "S-0315-6", "type": "photo", "stem": "写出：某同学说：「剪切就是先把文件复制一份，再把原件删掉一半，所以剪切完原位置还剩半个文件。」指出这句话错在哪里。", "extra": null}, {"day": 7, "id": "S-0306-3", "type": "judge", "stem": "判断对错：运行中的程序发现主存空间不足，需要把暂时不用的页面调出、把需要的页面调入。负责这项工作的是文件管理。（这道是辅助观察题，对错不计入判定）", "extra": null}];
+(function(){
+  var LETTERS = ['A','B','C','D'];
+  var daysEl = document.getElementById('days');
+  var byDay = {};
+  QUESTIONS.forEach(function(q){ (byDay[q.day] = byDay[q.day] || []).push(q); });
+  Object.keys(byDay).sort().forEach(function(d){
+    var card = document.createElement('div'); card.className = 'card';
+    var title = document.createElement('div'); title.className = 'day-title'; title.textContent = '第 ' + d + ' 天';
+    card.appendChild(title);
+    byDay[d].forEach(function(q, idx){ card.appendChild(buildQuestion(q, idx)); });
+    daysEl.appendChild(card);
+  });
+
+  function buildQuestion(q, idx){
+    var box = document.createElement('div');
+    var t = document.createElement('div'); t.className = 'q-title';
+    t.textContent = (idx + 1) + '.（' + q.id + '）';
+    box.appendChild(t);
+    var stem = document.createElement('div'); stem.className = 'stem'; stem.textContent = q.stem;
+    box.appendChild(stem);
+    var ctrl = document.createElement('div');
+    if (q.type === 'choice' || q.type === 'judge') {
+      var opts = q.type === 'judge' ? ['对','错'] : q.extra;
+      opts.forEach(function(op, oi){
+        var lab = document.createElement('label'); lab.className = 'opt';
+        var r = document.createElement('input'); r.type = 'radio'; r.name = 'r-' + q.id; r.value = q.type === 'judge' ? op : LETTERS[oi];
+        lab.appendChild(r);
+        lab.appendChild(document.createTextNode(q.type === 'judge' ? op : (LETTERS[oi] + ' ' + op)));
+        r.addEventListener('change', function(){
+          var labs = box.querySelectorAll('.opt');
+          labs.forEach(function(L){ L.classList.remove('sel'); });
+          lab.classList.add('sel');
+        });
+        ctrl.appendChild(lab);
+      });
+    } else if (q.type === 'order') {
+      q.extra.forEach(function(item, pos){
+        var row = document.createElement('div'); row.className = 'selrow';
+        var lab = document.createElement('span'); lab.textContent = '第 ' + (pos + 1) + ' 位：';
+        var sel = document.createElement('select'); sel.id = 'sel-' + q.id + '-' + pos;
+        var ph = document.createElement('option'); ph.value = ''; ph.textContent = '请选择'; sel.appendChild(ph);
+        q.extra.forEach(function(it){
+          var o = document.createElement('option'); o.value = it.charAt(0); o.textContent = it; sel.appendChild(o);
+        });
+        row.appendChild(lab); row.appendChild(sel); ctrl.appendChild(row);
+      });
+      var full = document.createElement('p'); full.className = 'note';
+      full.textContent = '题目各项：' + q.extra.join('　');
+      ctrl.appendChild(full);
+    } else if (q.type === 'pair') {
+      var rightSyms = q.extra.right.map(function(r){ return r.charAt(0); });
+      q.extra.left.forEach(function(item, li){
+        var row = document.createElement('div'); row.className = 'selrow';
+        var lab = document.createElement('span'); lab.textContent = item;
+        var sel = document.createElement('select'); sel.id = 'sel-' + q.id + '-' + li;
+        var ph = document.createElement('option'); ph.value = ''; ph.textContent = '请选择'; sel.appendChild(ph);
+        q.extra.right.forEach(function(r){
+          var o = document.createElement('option'); o.value = r.charAt(0); o.textContent = r; sel.appendChild(o);
+        });
+        row.appendChild(lab); row.appendChild(sel); ctrl.appendChild(row);
+      });
+    } else if (q.type === 'photo') {
+      var pick = document.createElement('label'); pick.className = 'pick'; pick.textContent = '📷 拍下你的手写答案（选 1 张照片）';
+      var inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'image/*'; inp.style.display = 'none'; inp.id = 'file-' + q.id;
+      pick.setAttribute('for', 'file-' + q.id);
+      var pv = document.createElement('div'); pv.className = 'pv';
+      inp.addEventListener('change', function(){
+        pv.innerHTML = '';
+        if (inp.files && inp.files[0]) {
+          var img = document.createElement('img'); img.src = URL.createObjectURL(inp.files[0]); pv.appendChild(img);
+        }
+      });
+      ctrl.appendChild(pick); ctrl.appendChild(inp); ctrl.appendChild(pv);
+    }
+    box.appendChild(ctrl);
+    var btn = document.createElement('button'); btn.className = 'submit'; btn.textContent = '提交这道题';
+    var msg = document.createElement('p'); msg.className = 'msg';
+    btn.addEventListener('click', function(){ submit(q, box, btn, msg); });
+    box.appendChild(btn); box.appendChild(msg);
+    return box;
+  }
+
+  function getAnswer(q, box){
+    if (q.type === 'choice' || q.type === 'judge') {
+      var r = box.querySelector('input[name="r-' + q.id + '"]:checked');
+      return r ? r.value : '';
+    }
+    if (q.type === 'order') {
+      var parts = [];
+      for (var i = 0; i < q.extra.length; i++) {
+        var s = document.getElementById('sel-' + q.id + '-' + i);
+        if (!s || !s.value) return '';
+        parts.push(s.value);
+      }
+      return parts.join('');
+    }
+    if (q.type === 'pair') {
+      var out = [];
+      for (var i = 0; i < q.extra.left.length; i++) {
+        var s2 = document.getElementById('sel-' + q.id + '-' + i);
+        if (!s2 || !s2.value) return '';
+        out.push('ABCD'.charAt(i) + s2.value);
+      }
+      return out.join(' ');
+    }
+    return '';
+  }
+
+  function p2(n){ return String(n).padStart(2, '0'); }
+  function stamp(){
+    var now = new Date();
+    return now.getFullYear() + p2(now.getMonth() + 1) + p2(now.getDate()) + '-' + p2(now.getHours()) + p2(now.getMinutes()) + p2(now.getSeconds());
+  }
+  function shrinkToJpeg(file){
+    return new Promise(function(resolve, reject){
+      var url = URL.createObjectURL(file);
+      var img = new Image();
+      img.onload = function(){
+        var MAX = 1600;
+        var w = img.naturalWidth, h = img.naturalHeight;
+        var sc = Math.min(1, MAX / Math.max(w, h));
+        var c = document.createElement('canvas'); c.width = Math.round(w * sc); c.height = Math.round(h * sc);
+        var ctx = c.getContext('2d');
+        ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, c.width, c.height);
+        ctx.drawImage(img, 0, 0, c.width, c.height);
+        URL.revokeObjectURL(url);
+        c.toBlob(function(b){ b ? resolve(b) : reject(new Error('图片处理失败')); }, 'image/jpeg', 0.85);
+      };
+      img.onerror = function(){ URL.revokeObjectURL(url); reject(new Error('图片读不出来')); };
+      img.src = url;
+    });
+  }
+  function putFile(token, path, b64, message){
+    return fetch('https://api.github.com/repos/chenkeny60/cuotiben-answers/contents/' + path, {
+      method: 'PUT',
+      headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github+json' },
+      body: JSON.stringify({ message: message, content: b64 })
+    }).then(function(resp){ if (!resp.ok) throw new Error('状态 ' + resp.status); return resp; });
+  }
+  function blobToB64(blob){
+    return new Promise(function(resolve){
+      var r = new FileReader();
+      r.onload = function(){ resolve(String(r.result).split(',')[1]); };
+      r.readAsDataURL(blob);
+    });
+  }
+  function textToB64(text){ return btoa(unescape(encodeURIComponent(text))); }
+
+  function submit(q, box, btn, msg){
+    var token = localStorage.getItem('cuotiben_gh_token') || '';
+    if (!token) {
+      msg.textContent = '还没设置提交令牌：先到页面顶部「提交设置」粘贴一次令牌（和答题页同一个）。';
+      document.getElementById('settings').scrollIntoView({behavior: 'smooth'});
+      return;
+    }
+    var base = 'trial/D' + q.day + '-' + q.id + '-' + stamp();
+    btn.disabled = true;
+    var old = btn.textContent;
+    function fail(err){
+      btn.disabled = false; btn.textContent = old;
+      msg.textContent = '提交失败（' + err.message + '）。可能是令牌不对/已过期或网络问题；也可以把答案发微信给我，我照样记。';
+    }
+    if (q.type === 'photo') {
+      var inp = document.getElementById('file-' + q.id);
+      if (!inp || !inp.files || !inp.files[0]) { btn.disabled = false; msg.textContent = '还没选照片：先拍下这道题的手写答案再提交。'; return; }
+      msg.textContent = '正在提交…';
+      shrinkToJpeg(inp.files[0]).then(blobToB64).then(function(b64){
+        return putFile(token, base + '.jpg', b64, 'trial ' + q.id);
+      }).then(function(){
+        btn.textContent = '✅ 已提交，今晚 21:00 判分';
+        msg.textContent = '提交成功，照片已经存到我这边了。';
+      }).catch(fail);
+    } else {
+      var ans = getAnswer(q, box);
+      if (!ans) { btn.disabled = false; msg.textContent = '还没选完：把这道题的选项都选好再提交。'; return; }
+      msg.textContent = '正在提交…';
+      var content = 'day=' + q.day + ' id=' + q.id + ' type=' + q.type + ' answer=' + ans;
+      putFile(token, base + '.txt', textToB64(content), 'trial ' + q.id).then(function(){
+        btn.textContent = '✅ 已提交，今晚 21:00 判分';
+        msg.textContent = '提交成功，你的答案已经存到我这边了。';
+      }).catch(fail);
+    }
+  }
+})();
+</script>
+<script>
+(function(){
+  var input = document.getElementById('token-input');
+  var status = document.getElementById('token-status');
+  if (!input || !status) return;
+  function refresh(){
+    var t = localStorage.getItem('cuotiben_gh_token') || '';
+    status.textContent = t ? '✅ 本机已保存令牌，可以直接提交。' : '尚未设置令牌：粘贴后点保存，只需一次。';
+    input.placeholder = t ? '已保存（要更换就粘贴新令牌）' : '粘贴 GitHub 令牌（只存在这台设备里）';
+  }
+  document.getElementById('token-save').addEventListener('click', function(){
+    var v = input.value.trim();
+    if (v) { localStorage.setItem('cuotiben_gh_token', v); input.value = ''; }
+    refresh();
+  });
+  refresh();
+})();
+</script>
+</body></html>
