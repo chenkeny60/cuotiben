@@ -24,6 +24,10 @@
   .selrow select { flex:1; font-size:14.5px; padding:8px; border:1px solid #d8deeb; border-radius:10px; min-width:0; background:#fff; }
   .pick { display:block; width:100%; text-align:center; border:1.5px dashed #6a4fd0; color:#6a4fd0; background:#f2efff; border-radius:12px; padding:15px 10px; font-size:14.5px; font-weight:700; cursor:pointer; }
   .pv img { width:100%; border-radius:10px; border:1px solid #d8deeb; display:block; margin-top:10px; }
+  canvas.pad { width:100%; height:auto; display:block; border:1.5px solid #c9d4ee; border-radius:10px; background:#fff; touch-action:none; -webkit-touch-callout:none; -webkit-user-select:none; user-select:none; }
+  .tools { display:flex; gap:8px; margin:8px 0; flex-wrap:wrap; }
+  .tools .tool.active { background:#2f5fd0; color:#fff; border-color:#2f5fd0; }
+  .photofallback { display:block; width:100%; margin-top:10px; background:#fff; color:#6a4fd0; border:1px dashed #6a4fd0; border-radius:999px; font-size:13px; padding:8px; cursor:pointer; }
   .submit { display:block; width:100%; margin-top:12px; background:#2f5fd0; color:#fff; border:1px solid #2f5fd0; border-radius:999px; font-weight:700; font-size:15px; padding:11px; cursor:pointer; }
   .submit:disabled { opacity:.7; }
   .msg { color:#2f5fd0; font-size:13.5px; margin:8px 0 0; line-height:1.6; }
@@ -35,7 +39,7 @@
 <body><div class="wrap">
   <h1>🧪 一周试用 · 计算机三考点</h1>
   <div class="sub">每天 3 道，只做当天那一组，做完就提交，不用等晚上一起交 ｜ <a href="index.html">← 回错题本主页</a> ｜ <a href="dati.html">✏️ 答题版</a> ｜ <a href="tijiao.html">➕ 提交新错题</a></div>
-  <div class="sub">选择题、判断题、排序题、配对题：直接在页面上选好点提交。填空题和写出题：在纸上或 iPad 上写好，拍照上传。提交后今晚 21:00 我统一判分、记账，第二天在主聊天告诉你结果。不会的题不用硬猜：点题目下面的「不会这道」就行，记下来就是有效信息。可以查资料，但查过的题勾一下「查过资料」——那种只算练过，不算闭卷证据。</div>
+  <div class="sub">选择题、判断题、排序题、配对题：直接在页面上选好点提交。填空题和写出题：直接在题目下面的框里写好点提交就行（跟数学答题页一样），不用拍照；只有答案内容特别多、框里实在写不下时，才用框下面的「内容特别多，改用拍照上传」。提交后今晚 21:00 我统一判分、记账，第二天在主聊天告诉你结果。不会的题不用硬猜：点题目下面的「不会这道」就行，记下来就是有效信息。可以查资料，但查过的题勾一下「查过资料」——那种只算练过，不算闭卷证据。</div>
 
   <div class="card" id="settings">
     <div class="settings-title">⚙️ 提交设置（只需设置一次）</div>
@@ -115,6 +119,22 @@ var QUESTIONS = [{"day": 1, "id": "S-0302-1", "type": "choice", "stem": "下列�
         row.appendChild(lab); row.appendChild(sel); ctrl.appendChild(row);
       });
     } else if (q.type === 'photo') {
+      var hint = document.createElement('p'); hint.className = 'note';
+      hint.textContent = '✍️ 直接在框里写答案（用笔写就行，填空题把要填的词写清楚），写完点下面「提交这道题」。';
+      ctrl.appendChild(hint);
+      var tools = document.createElement('div'); tools.className = 'tools';
+      [['pen','✏️ 笔'],['eraser','🧽 橡皮'],['undo','↩️ 撤销'],['clear','🗑 清空']].forEach(function(td, ti){
+        var tb = document.createElement('button'); tb.type = 'button'; tb.className = 'tool' + (ti === 0 ? ' active' : '');
+        tb.textContent = td[1]; tb.setAttribute('data-padbtn', td[0]); tb.setAttribute('data-qid', q.id);
+        tools.appendChild(tb);
+      });
+      ctrl.appendChild(tools);
+      var cv = document.createElement('canvas'); cv.className = 'pad'; cv.id = 'pad-' + q.id;
+      cv.width = 1560; cv.height = 620;
+      ctrl.appendChild(cv);
+      var pf = document.createElement('button'); pf.type = 'button'; pf.className = 'photofallback';
+      pf.textContent = '📷 内容特别多、框里写不下时，点这里改用拍照上传';
+      var pvwrap = document.createElement('div'); pvwrap.style.display = 'none';
       var pick = document.createElement('label'); pick.className = 'pick'; pick.textContent = '📷 拍下你的手写答案（选 1 张照片）';
       var inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'image/*'; inp.style.display = 'none'; inp.id = 'file-' + q.id;
       pick.setAttribute('for', 'file-' + q.id);
@@ -125,7 +145,9 @@ var QUESTIONS = [{"day": 1, "id": "S-0302-1", "type": "choice", "stem": "下列�
           var img = document.createElement('img'); img.src = URL.createObjectURL(inp.files[0]); pv.appendChild(img);
         }
       });
-      ctrl.appendChild(pick); ctrl.appendChild(inp); ctrl.appendChild(pv);
+      pvwrap.appendChild(pick); pvwrap.appendChild(inp); pvwrap.appendChild(pv);
+      pf.addEventListener('click', function(){ pvwrap.style.display = (pvwrap.style.display === 'none' ? 'block' : 'none'); });
+      ctrl.appendChild(pf); ctrl.appendChild(pvwrap);
     }
     box.appendChild(ctrl);
     var btn = document.createElement('button'); btn.className = 'submit'; btn.textContent = '提交这道题';
@@ -139,6 +161,7 @@ var QUESTIONS = [{"day": 1, "id": "S-0302-1", "type": "choice", "stem": "下列�
     var skip = document.createElement('button'); skip.className = 'skip'; skip.textContent = '不会这道，直接记下来';
     skip.addEventListener('click', function(){ submitSkip(q, box, skip, msg); });
     box.appendChild(skip); box.appendChild(msg);
+    if (q.type === 'photo') { setTimeout(function(){ initPad(q, box); }, 0); }
     return box;
   }
 
@@ -208,6 +231,132 @@ var QUESTIONS = [{"day": 1, "id": "S-0302-1", "type": "choice", "stem": "下列�
   }
   function textToB64(text){ return btoa(unescape(encodeURIComponent(text))); }
 
+  var PADS = {};
+  function initPad(q, box){
+    var cv = document.getElementById('pad-' + q.id);
+    if (!cv) return;
+    var ctx = cv.getContext('2d');
+    ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, cv.width, cv.height);
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    var pad = { cv: cv, ctx: ctx, strokes: [], cur: null, tool: 'pen', activeId: null };
+    PADS[q.id] = pad;
+    function redraw(){
+      ctx.save();
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, cv.width, cv.height);
+      pad.strokes.forEach(function(st){ drawStroke(st); });
+      if (pad.cur) drawStroke(pad.cur);
+      ctx.restore();
+    }
+    function drawStroke(st){
+      ctx.save();
+      ctx.globalCompositeOperation = (st.tool === 'eraser') ? 'destination-out' : 'source-over';
+      if (st.tool === 'eraser') { ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, cv.width, cv.height); ctx.globalCompositeOperation = 'source-over'; }
+      ctx.strokeStyle = '#1a1d26'; ctx.fillStyle = '#1a1d26';
+      if (st.pts.length === 1) {
+        ctx.beginPath(); ctx.arc(st.pts[0][0], st.pts[0][1], st.pts[0][2] / 2, 0, 7); ctx.fill();
+      } else {
+        for (var i = 1; i < st.pts.length; i++) {
+          ctx.beginPath(); ctx.lineWidth = st.pts[i][2];
+          ctx.moveTo(st.pts[i-1][0], st.pts[i-1][1]); ctx.lineTo(st.pts[i][0], st.pts[i][1]); ctx.stroke();
+        }
+      }
+      ctx.restore();
+      if (st.tool === 'eraser') { /* eraser strokes drawn as thick white via strokeStyle override below */ }
+    }
+    // simpler robust redraw: eraser = thick white stroke on white bg
+    redraw = function(){
+      ctx.save();
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, cv.width, cv.height);
+      ctx.restore();
+      pad.strokes.forEach(function(st){ drawOne(st); });
+      if (pad.cur) drawOne(pad.cur);
+    };
+    function drawOne(st){
+      ctx.save();
+      ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+      ctx.strokeStyle = (st.tool === 'eraser') ? '#ffffff' : '#1a1d26';
+      ctx.fillStyle = ctx.strokeStyle;
+      if (st.pts.length === 1) {
+        ctx.beginPath(); ctx.arc(st.pts[0][0], st.pts[0][1], st.pts[0][2] / 2, 0, 7); ctx.fill();
+      } else {
+        for (var i = 1; i < st.pts.length; i++) {
+          ctx.beginPath(); ctx.lineWidth = st.pts[i][2];
+          ctx.moveTo(st.pts[i-1][0], st.pts[i-1][1]); ctx.lineTo(st.pts[i][0], st.pts[i][1]); ctx.stroke();
+        }
+      }
+      ctx.restore();
+    }
+    pad.redraw = redraw;
+    function isPen(e){ return !e.pointerType || e.pointerType === 'pen' || e.pointerType === 'mouse'; }
+    function posOf(e){
+      var r = cv.getBoundingClientRect();
+      return [ (e.clientX - r.left) * (cv.width / r.width), (e.clientY - r.top) * (cv.height / r.height) ];
+    }
+    cv.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+    cv.addEventListener('pointerdown', function(e){
+      if (!isPen(e) || pad.cur) return;
+      e.preventDefault();
+      pad.activeId = e.pointerId;
+      var p = posOf(e);
+      var w = (pad.tool === 'eraser') ? 44 : (3 + (e.pressure || 0.5) * 5);
+      pad.cur = { tool: pad.tool, pts: [[p[0], p[1], w]] };
+      redraw();
+    });
+    cv.addEventListener('pointermove', function(e){
+      if (!pad.cur || !isPen(e) || e.pointerId !== pad.activeId) return;
+      e.preventDefault();
+      var evs = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];
+      evs.forEach(function(ev){
+        var p = posOf(ev);
+        var w = (pad.tool === 'eraser') ? 44 : (3 + (ev.pressure || 0.5) * 5);
+        pad.cur.pts.push([p[0], p[1], w]);
+      });
+      redraw();
+    });
+    function endStroke(){ if (pad.cur) { pad.strokes.push(pad.cur); pad.cur = null; pad.activeId = null; redraw(); } }
+    cv.addEventListener('pointerup', function(e){ if (e.pointerId === pad.activeId) endStroke(); });
+    window.addEventListener('pointerup', function(e){ if (pad.activeId !== null && e.pointerId === pad.activeId) endStroke(); });
+    cv.addEventListener('pointercancel', endStroke);
+    cv.addEventListener('touchstart', function(e){ e.preventDefault(); }, { passive: false });
+    cv.addEventListener('touchmove', function(e){ e.preventDefault(); }, { passive: false });
+    box.querySelectorAll('[data-padbtn][data-qid="' + q.id + '"]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var act = b.getAttribute('data-padbtn');
+        if (act === 'pen' || act === 'eraser') {
+          pad.tool = act;
+          box.querySelectorAll('[data-padbtn][data-qid="' + q.id + '"]').forEach(function(x){ x.classList.toggle('active', x === b); });
+        } else if (act === 'undo') { pad.strokes.pop(); redraw(); }
+        else if (act === 'clear') { if (confirm('清空这道题的全部笔迹？')) { pad.strokes = []; redraw(); } }
+      });
+    });
+  }
+  function wrapTextPad(c, text, x, y, maxW, lh){
+    var line = '';
+    for (var i = 0; i < text.length; i++) {
+      var test = line + text[i];
+      if (c.measureText(test).width > maxW && line) { c.fillText(line, x, y); y += lh; line = text[i]; }
+      else line = test;
+    }
+    if (line) { c.fillText(line, x, y); y += lh; }
+    return y;
+  }
+  function buildPadImage(q){
+    var pad = PADS[q.id];
+    var headH = 300;
+    var out = document.createElement('canvas');
+    out.width = pad.cv.width; out.height = pad.cv.height + headH;
+    var c = out.getContext('2d');
+    c.fillStyle = '#ffffff'; c.fillRect(0, 0, out.width, out.height);
+    c.fillStyle = '#6a4fd0'; c.font = 'bold 44px sans-serif';
+    c.fillText(q.id + '（第 ' + q.day + ' 天）', 36, 72);
+    c.fillStyle = '#1f2430'; c.font = '38px sans-serif';
+    wrapTextPad(c, q.stem, 36, 140, out.width - 72, 56);
+    c.drawImage(pad.cv, 0, headH);
+    return out;
+  }
+
   function submitSkip(q, box, btn, msg){
     var token = localStorage.getItem('cuotiben_gh_token') || '';
     if (!token) {
@@ -245,18 +394,29 @@ var QUESTIONS = [{"day": 1, "id": "S-0302-1", "type": "choice", "stem": "下列�
     }
     if (q.type === 'photo') {
       var inp = document.getElementById('file-' + q.id);
-      if (!inp || !inp.files || !inp.files[0]) { btn.disabled = false; msg.textContent = '还没选照片：先拍下这道题的手写答案再提交。'; return; }
+      var hasPhoto = !!(inp && inp.files && inp.files[0]);
+      var pad = PADS[q.id];
+      var hasInk = !!(pad && pad.strokes.length);
+      if (!hasPhoto && !hasInk) { btn.disabled = false; msg.textContent = '还没写：先在框里把答案写好再提交（内容特别多时才需要拍照）。'; return; }
       msg.textContent = '正在提交…';
-      shrinkToJpeg(inp.files[0]).then(blobToB64).then(function(b64){
-        return putFile(token, base + '.jpg', b64, 'trial ' + q.id);
-      }).then(function(){
+      var sendP;
+      if (hasPhoto) {
+        sendP = shrinkToJpeg(inp.files[0]).then(blobToB64).then(function(b64){
+          return putFile(token, base + '.jpg', b64, 'trial ' + q.id);
+        });
+      } else {
+        sendP = new Promise(function(resolve){ buildPadImage(q).toBlob(resolve, 'image/png'); }).then(blobToB64).then(function(b64){
+          return putFile(token, base + '.png', b64, 'trial ' + q.id);
+        });
+      }
+      sendP.then(function(){
         var lkEl = document.getElementById('chk-' + q.id);
         if (lkEl && lkEl.checked) {
           return putFile(token, base + '-flag.txt', textToB64('day=' + q.day + ' id=' + q.id + ' lookup=1'), 'trial flag ' + q.id);
         }
       }).then(function(){
         btn.textContent = '✅ 已提交，今晚 21:00 判分';
-        msg.textContent = '提交成功，照片已经存到我这边了。';
+        msg.textContent = '提交成功，答案已经存到我这边了。';
       }).catch(fail);
     } else {
       var ans = getAnswer(q, box);
