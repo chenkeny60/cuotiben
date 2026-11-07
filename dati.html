@@ -40,13 +40,9 @@
   <h1>✏️ 答题版 · 待作答变式题</h1>
   <div class="sub">闭卷手写，写完点「提交答案」直接发给我，今晚结算判分 ｜ <a href="index.html">← 回错题本看卡片</a></div>
   <div class="settings" id="settings">
-    <div class="settings-title">⚙️ 提交设置（只需设置一次）</div>
-    <p class="settings-note" id="token-status">正在读取本机设置…</p>
-    <div class="settings-row">
-      <input id="token-input" type="password" placeholder="粘贴 GitHub 令牌（只存在这台设备里）" autocomplete="off">
-      <button id="token-save" class="tool">保存令牌</button>
-    </div>
-    <p class="settings-note">令牌只保存在这台设备的浏览器里，用来把答案图存进你的私有仓库 cuotiben-answers，我晚上结算时去那里取。没设置令牌也能做题，用「导出图片」发微信即可。</p>
+    <div class="settings-title">🚀 直接提交（不用令牌）</div>
+    <p class="settings-note" id="token-status">提交走中转：任何浏览器打开都能直接提交，不用再填令牌。</p>
+    <p class="settings-note">提交会经中转直接存进你的私有仓库 cuotiben-answers，我晚上结算时去那里取。</p>
   </div>
   
 <section class="qcard" id="GS-001" data-idx="0" data-code="GS-001" data-question="设 0&lt;a&lt;b，证明 (b−a)/b &lt; ln(b/a) &lt; (b−a)/a。">
@@ -278,12 +274,6 @@ document.querySelectorAll('.qcard').forEach(function(card){
   }
   function submitImage(btn){
     var msg = card.querySelector('.submit-msg');
-    var token = localStorage.getItem('cuotiben_gh_token') || '';
-    if (!token) {
-      msg.textContent = '这个浏览器还没存令牌：请改用当时能提交成功的那个入口打开，或在页面顶部粘贴一次；也可以用下方导出图片发微信给我。';
-      document.getElementById('settings').scrollIntoView({behavior: 'smooth'});
-      return;
-    }
     if (!strokes.length) { msg.textContent = '画布还是空的，先写完再提交。'; return; }
     btn.disabled = true;
     var oldText = btn.textContent;
@@ -296,17 +286,17 @@ document.querySelectorAll('.qcard').forEach(function(card){
         var now = new Date();
         function p2(n){ return String(n).padStart(2, '0'); }
         var fname = 'answers/' + card.dataset.code + '-' + now.getFullYear() + p2(now.getMonth() + 1) + p2(now.getDate()) + '-' + p2(now.getHours()) + p2(now.getMinutes()) + p2(now.getSeconds()) + '.png';
-        fetch('https://api.github.com/repos/chenkeny60/cuotiben-answers/contents/' + fname, {
-          method: 'PUT',
-          headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github+json' },
-          body: JSON.stringify({ message: 'answer ' + card.dataset.code, content: b64 })
+        fetch('https://cuotiben-relay.chenkeny60.workers.dev/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ path: fname, content: b64, message: 'answer ' + card.dataset.code })
         }).then(function(resp){
           if (resp.ok) {
             btn.textContent = '✅ 已提交，今晚结算时判分';
             msg.textContent = '提交成功，答案已经直接存到我这边了。';
           } else {
             btn.disabled = false; btn.textContent = oldText;
-            msg.textContent = '提交失败（状态 ' + resp.status + '）。可能是令牌不对或已过期；也可以用下方导出图片发微信给我。';
+            msg.textContent = '提交失败（状态 ' + resp.status + '）。可能是网络或中转异常；也可以用下方导出图片发微信给我。';
           }
         }).catch(function(){
           btn.disabled = false; btn.textContent = oldText;
@@ -348,22 +338,5 @@ document.querySelectorAll('.qcard').forEach(function(card){
   resize();
 });
 </script>
-<script>
-(function(){
-  var input = document.getElementById('token-input');
-  var status = document.getElementById('token-status');
-  if (!input || !status) return;
-  function refresh(){
-    var t = localStorage.getItem('cuotiben_gh_token') || '';
-    status.textContent = t ? '✅ 本机已保存令牌，可以直接点提交。' : '⚠️ 这个浏览器还没存令牌。令牌只存在你当初填的那个浏览器里，换入口打开就要重填：请改用当时能提交成功的那个入口打开（三个页面共用），就不用填；实在找不到，再在这里粘贴保存。';
-    input.placeholder = t ? '已保存（要更换就粘贴新令牌）' : '粘贴 GitHub 令牌（只存在这台设备里）';
-  }
-  document.getElementById('token-save').addEventListener('click', function(){
-    var v = input.value.trim();
-    if (v) { localStorage.setItem('cuotiben_gh_token', v); input.value = ''; }
-    refresh();
-  });
-  refresh();
-})();
-</script>
+
 </body></html>
