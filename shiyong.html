@@ -42,13 +42,9 @@
   <div class="sub">选择题、判断题、排序题、配对题：直接在页面上选好点提交。填空题和写出题：直接在题目下面的框里写好点提交就行（跟数学答题页一样），不用拍照；只有答案内容特别多、框里实在写不下时，才用框下面的「内容特别多，改用拍照上传」。提交后今晚 21:00 我统一判分、记账，第二天在主聊天告诉你结果。不会的题不用硬猜：点题目下面的「不会这道」就行，记下来就是有效信息。可以查资料，但查过的题勾一下「查过资料」——那种只算练过，不算闭卷证据。</div>
 
   <div class="card" id="settings">
-    <div class="settings-title">⚙️ 提交设置（只需设置一次）</div>
-    <p class="note" id="token-status">正在读取本机设置…</p>
-    <div class="settings-row">
-      <input id="token-input" type="password" placeholder="粘贴 GitHub 令牌（只存在这台设备里）" autocomplete="off">
-      <button id="token-save" class="tool">保存令牌</button>
-    </div>
-    <p class="note">和答题页、提交错题页共用同一个令牌：那边设置过，这里会自动显示已保存。</p>
+    <div class="settings-title">🚀 直接提交（不用令牌）</div>
+    <p class="note" id="token-status">提交走中转：任何浏览器打开都能直接提交，不用再填令牌。</p>
+    <p class="note">提交会经中转直接存进你的私有仓库 cuotiben-answers，我晚上结算时去那里取。</p>
   </div>
 
   <div id="days"></div>
@@ -216,10 +212,10 @@ var QUESTIONS = [{"day": 1, "id": "S-0302-1", "type": "choice", "stem": "下列�
     });
   }
   function putFile(token, path, b64, message){
-    return fetch('https://api.github.com/repos/chenkeny60/cuotiben-answers/contents/' + path, {
-      method: 'PUT',
-      headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github+json' },
-      body: JSON.stringify({ message: message, content: b64 })
+    return fetch('https://cuotiben-relay.chenkeny60.workers.dev/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ path: path, content: b64, message: message })
     }).then(function(resp){ if (!resp.ok) throw new Error('状态 ' + resp.status); return resp; });
   }
   function blobToB64(blob){
@@ -358,12 +354,7 @@ var QUESTIONS = [{"day": 1, "id": "S-0302-1", "type": "choice", "stem": "下列�
   }
 
   function submitSkip(q, box, btn, msg){
-    var token = localStorage.getItem('cuotiben_gh_token') || '';
-    if (!token) {
-      msg.textContent = '这个浏览器还没存令牌：请改用当时能提交成功的那个入口打开（三个页面共用同一个令牌），或在页面顶部粘贴一次。';
-      document.getElementById('settings').scrollIntoView({behavior: 'smooth'});
-      return;
-    }
+    var token = '';
     btn.disabled = true;
     var old = btn.textContent;
     msg.textContent = '正在提交…';
@@ -374,23 +365,18 @@ var QUESTIONS = [{"day": 1, "id": "S-0302-1", "type": "choice", "stem": "下列�
       msg.textContent = '记好了。不会很正常，试用就是测这个的，今晚结算会如实记账。';
     }).catch(function(err){
       btn.disabled = false; btn.textContent = old;
-      msg.textContent = '提交失败（' + err.message + '）。可能是令牌不对/已过期或网络问题。';
+      msg.textContent = '提交失败（' + err.message + '）。可能是网络或中转异常。';
     });
   }
 
   function submit(q, box, btn, msg){
-    var token = localStorage.getItem('cuotiben_gh_token') || '';
-    if (!token) {
-      msg.textContent = '这个浏览器还没存令牌：请改用当时能提交成功的那个入口打开（三个页面共用同一个令牌），或在页面顶部粘贴一次。';
-      document.getElementById('settings').scrollIntoView({behavior: 'smooth'});
-      return;
-    }
+    var token = '';
     var base = 'trial/D' + q.day + '-' + q.id + '-' + stamp();
     btn.disabled = true;
     var old = btn.textContent;
     function fail(err){
       btn.disabled = false; btn.textContent = old;
-      msg.textContent = '提交失败（' + err.message + '）。可能是令牌不对/已过期或网络问题；也可以把答案发微信给我，我照样记。';
+      msg.textContent = '提交失败（' + err.message + '）。可能是网络或中转异常；也可以把答案发微信给我，我照样记。';
     }
     if (q.type === 'photo') {
       var inp = document.getElementById('file-' + q.id);
@@ -432,22 +418,5 @@ var QUESTIONS = [{"day": 1, "id": "S-0302-1", "type": "choice", "stem": "下列�
   }
 })();
 </script>
-<script>
-(function(){
-  var input = document.getElementById('token-input');
-  var status = document.getElementById('token-status');
-  if (!input || !status) return;
-  function refresh(){
-    var t = localStorage.getItem('cuotiben_gh_token') || '';
-    status.textContent = t ? '✅ 本机已保存令牌，可以直接提交。' : '⚠️ 这个浏览器还没存令牌。令牌只存在你当初填的那个浏览器里，换入口打开就要重填：请改用当时能提交成功的那个入口打开（三个页面共用），就不用填；实在找不到，再在这里粘贴保存。';
-    input.placeholder = t ? '已保存（要更换就粘贴新令牌）' : '粘贴 GitHub 令牌（只存在这台设备里）';
-  }
-  document.getElementById('token-save').addEventListener('click', function(){
-    var v = input.value.trim();
-    if (v) { localStorage.setItem('cuotiben_gh_token', v); input.value = ''; }
-    refresh();
-  });
-  refresh();
-})();
-</script>
+
 </body></html>
