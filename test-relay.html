@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>中转连通测试</title>
+<style>
+  body { font-family: sans-serif; margin: 24px; color: #1f2430; }
+  button { font-size: 17px; padding: 12px 22px; border-radius: 999px; border: none; background: #6a4fd0; color: #fff; }
+  #out { margin-top: 18px; font-size: 15px; line-height: 1.7; white-space: pre-wrap; word-break: break-all; }
+</style>
+</head>
+<body>
+<h2>中转连通测试</h2>
+<p>点按钮后，本页会经中转服务往私有仓库 cuotiben-answers 的 test/ 目录写一个测试文件。</p>
+<button id="btn">开始测试</button>
+<div id="out">等待测试…</div>
+<script>
+document.getElementById('btn').addEventListener('click', function(){
+  var out = document.getElementById('out');
+  out.textContent = '正在提交…';
+  fetch('https://cuotiben-relay.chenkeny60.workers.dev/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ path: 'test/relay-page-check.txt', content: btoa('relay page check ok'), message: 'relay page check' })
+  }).then(function(resp){
+    return resp.text().then(function(txt){
+      out.textContent = 'HTTP 状态：' + resp.status + '\n' + (resp.ok ? '✅ 中转写入成功' : '❌ 失败') + '\n返回内容（节选）：' + txt.slice(0, 300);
+    });
+  }).catch(function(err){
+    out.textContent = '❌ 网络错误：' + err;
+  });
+});
+</script>
+</body>
+</html>
