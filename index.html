@@ -51,11 +51,11 @@
   <div class="stats">
     <span class="stat">共 <b>4</b> 题</span>
     <span class="stat">未掌握 <b>3</b> 题</span>
-    <span class="stat">半掌握 <b>1</b> 题</span>
-    <span class="stat">已掌握 <b>0</b> 题</span>
+    <span class="stat">半掌握 <b>0</b> 题</span>
+    <span class="stat">已掌握 <b>1</b> 题</span>
     <span class="stat">待作答变式 <b>4</b> 道</span>
-    <span class="stat">最近复习日 <b>2026-10-29</b></span>
-    <span class="stat">复习排期 <b style="font-size:13px;">GS-001（2026-10-29）、GS-002（2026-10-30）、GS-003（2026-11-03）、GS-004（2026-11-09）</b></span>
+    <span class="stat">最近复习日 <b>2026-10-30</b></span>
+    <span class="stat">复习排期 <b style="font-size:13px;">GS-002（2026-10-30）、GS-003（2026-11-03）、GS-004（2026-11-09）、GS-001（2026-11-19）</b></span>
   </div>
   
 <details class="card">
@@ -63,8 +63,8 @@
     <span class="code">GS-001</span>
     <span class="module">拉格朗日中值定理与不等式放缩</span>
     <span class="tag tag-err">错因 · 方法选择</span>
-    <span class="tag m-mid">半掌握</span>
-    <span class="tag tag-date">复习 · 2026-10-29</span>
+    <span class="tag m-good">已掌握</span>
+    <span class="tag tag-date">复习 · 2026-11-19</span>
     <span class="toggle-hint"><span class="h-open">展开详情 ▾</span><span class="h-close">收起 ▴</span></span>
   </summary>
   <div class="sec prob">
@@ -73,24 +73,34 @@
   </div>
   <div class="sec err">
     <div class="sec-title">❌ 我的错误步骤</div>
-    <p>前两步等价变形正确（同乘 b−a&gt;0；令 t=b/a&gt;1 换元）；之后没收尾：黑笔辅助函数路线被划掉未做下去，红笔拉格朗日路线只写到 1/ξ=(ln b−ln a)/(b−a)，收尾被划掉、看不清，<mark class="bad">没接上 1/ξ 的下界放缩</mark>。</p>
+    <p>第 1 步：同乘 (b − a)，又令 t = b/a 换元 —— 变形正确。
+第 2 步：改走辅助函数路线，写了几行又划掉。
+第 3 步：改走拉格朗日路线，写到 1/ξ = (ln b − ln a)/(b − a) 就停了。
+✗ 断点：第 3 步之后没接上——要用 ξ &lt; b 放缩 1/ξ，才能得到下界。</p>
   </div>
   <div class="sec sol">
     <div class="sec-title">✅ 正确解法</div>
     <div class="flow"><span class="chip">对 ln x 用拉格朗日</span><span class="arrow">→</span><span class="chip">差商 = 1/ξ</span><span class="arrow">→</span><span class="chip">a²+b² ≥ 2ab 放缩</span><span class="arrow">→</span><span class="chip">取倒数得证</span></div>
-    <p>设 f(x)=ln x，在 [a,b] 上由拉格朗日中值定理，∃ξ∈(a,b) 使 (ln b−ln a)/(b−a)=f′(ξ)=1/ξ。又由 (a−b)²≥0 得 a²+b²≥2ab，即 (a²+b²)/(2a)≥b&gt;ξ&gt;0，取倒数得 1/ξ&gt;2a/(a²+b²)。代回即得所证不等式。</p>
+    <p>证明：
+设 f(x) = ln x，x ∈ [a, b]。
+f 在 [a, b] 上连续、在 (a, b) 内可导，由拉格朗日中值定理，
+存在 ξ ∈ (a, b)，使 (ln b − ln a)/(b − a) = f′(ξ) = 1/ξ。
+由 (a − b)² ≥ 0，得 a² + b² ≥ 2ab，
+两边同除以 2a（&gt; 0）：(a² + b²)/(2a) ≥ b &gt; ξ &gt; 0。
+取倒数：1/ξ &gt; 2a/(a² + b²)。
+代回即得 (ln b − ln a)/(b − a) &gt; 2a/(a² + b²)。证毕。</p>
   </div>
   <div class="sec key">
     <div class="sec-title">🔑 关键方法</div>
-    <p>拉格朗日中值定理把差商换成 1/ξ，再用 a²+b²≥2ab 放缩。</p>
+    <p>差商用拉格朗日换成 1/ξ，再用 a² + b² ≥ 2ab 放缩。</p>
   </div>
   <div class="sec memo">
     <div class="sec-title">💡 需要记忆的结论</div>
-    <p>a²+b²≥2ab；(ln b−ln a)/(b−a)=1/ξ（ξ∈(a,b)）；ξ 越小 1/ξ 越大，放缩取倒数注意方向翻转</p>
+    <p>a² + b² ≥ 2ab；正数取倒数，不等号方向翻转。</p>
   </div>
   <div class="sec var">
       <div class="sec-title">🔁 变式题（先闭卷做它）<span class="var-status">待作答</span></div>
-      <p>设 0&lt;a&lt;b，证明 (b−a)/b &lt; ln(b/a) &lt; (b−a)/a。</p>
+      <p>设 0&lt;a&lt;b，证明：(b−a)/(2√b) &lt; √b − √a &lt; (b−a)/(2√a)。</p>
       <a class="go-answer" href="dati.html#GS-001">✏️ 去做这道变式题 →</a>
       <p class="hint">点过去在答题页手写，写完点「提交」我直接收到，晚上结算判分；参考答案只存档，不公布。</p>
     </div>
@@ -110,12 +120,24 @@
   </div>
   <div class="sec err">
     <div class="sec-title">❌ 我的错误步骤</div>
-    <p>① 两次拉格朗日算出 f′(a1)=(f(1)−2)/2、f′(a2)=2−f(1)，却写成 <mark class="bad">f′(a1)/f′(a2)=−2</mark>，比值分子分母写反（应为 −1/2）；② 由 f′(a1) 与 f′(a2) 异号直接推出 ∃ξ 使 f′(ξ)=0——<mark class="bad">介值定理只适用于连续函数，f′ 不一定连续</mark>，此步不严密，且非专升本常规路线；③ 结论区间最后写成 <mark class="bad">(0,1)</mark>，与题目要求的 (0,2) 不一致。</p>
+    <p>第 1 步：两次用拉格朗日，算出 f′(a₁) = (f(1) − 2)/2、f′(a₂) = 2 − f(1)；
+✗ 却把比值写成 f′(a₁)/f′(a₂) = −2（应为 −1/2），分子分母写反。
+第 2 步：由 f′(a₁) 与 f′(a₂) 异号，直接推出 ∃ξ 使 f′(ξ) = 0；
+✗ <mark class="bad">介值定理只适用于连续函数，f′ 不一定连续</mark>，这一步不成立。
+第 3 步：结论区间写成 (0, 1)，题目要求的是 (0, 2)。</p>
   </div>
   <div class="sec sol">
     <div class="sec-title">✅ 正确解法</div>
     <div class="flow"><span class="chip">看 f(1) 是否 = 2</span><span class="arrow">→</span><span class="chip">介值定理找等值点 c</span><span class="arrow">→</span><span class="chip">罗尔定理收官</span></div>
-    <p>若 f(1)=2，则由 f(0)+f(1)=4 得 f(0)=2，在 [0,1] 上用罗尔定理得 ξ∈(0,1)⊂(0,2)；若 f(1)≠2，则 f(0)=4−f(1) 与 f(1) 分居 2 的两侧，由 f 在 [0,1] 上连续、介值定理得 c∈(0,1) 使 f(c)=2=f(2)，再在 [c,2] 上用罗尔定理得 ξ∈(c,2)⊂(0,2)。</p>
+    <p>证明：
+情形 1：f(1) = 2。
+由 f(0) + f(1) = 4 得 f(0) = 2 = f(1)，
+在 [0, 1] 上用罗尔定理，得 ξ ∈ (0, 1) ⊂ (0, 2)，f′(ξ) = 0。
+情形 2：f(1) ≠ 2。
+f(0) = 4 − f(1)，f(0) 与 f(1) 分居 2 的两侧，
+由介值定理（f 在 [0, 1] 上连续），存在 c ∈ (0, 1)，使 f(c) = 2 = f(2)，
+在 [c, 2] 上用罗尔定理，得 ξ ∈ (c, 2) ⊂ (0, 2)，f′(ξ) = 0。
+两种情形都得证。证毕。</p>
   </div>
   <div class="sec key">
     <div class="sec-title">🔑 关键方法</div>
@@ -123,7 +145,7 @@
   </div>
   <div class="sec memo">
     <div class="sec-title">💡 需要记忆的结论</div>
-    <p>介值定理不能默认用于导函数 f′；见到“和为定值 + 端点等值”先想介值定理找等值点、再用罗尔定理</p>
+    <p>介值定理不能用在导函数 f′ 上（f′ 不一定连续）。</p>
   </div>
   <div class="sec var">
       <div class="sec-title">🔁 变式题（先闭卷做它）<span class="var-status">待作答</span></div>
@@ -147,20 +169,29 @@
   </div>
   <div class="sec err">
     <div class="sec-title">❌ 我的错误步骤</div>
-    <p>未提供步骤照片（提交的是宋浩老师板书截图，无本人步骤）；据备注“第一灵感没思路”，卡点在入手方法：想不到先用二倍角把 cos x 化掉再换元。错因判断依据有限。</p>
+    <p>未提供本人步骤（提交的是老师板书截图）。
+卡点：入手方法——想不到先用二倍角把 cos x 化掉再换元。</p>
   </div>
   <div class="sec sol">
     <div class="sec-title">✅ 正确解法</div>
     
-    <p>由 cos x＝2cos²(x/2)−1 得 2+cos x＝2cos²(x/2)+1；再用 1＝sin²(x/2)+cos²(x/2)，分母＝sin²(x/2)+3cos²(x/2)＝cos²(x/2)·[3+tan²(x/2)]，故原积分＝∫ sec²(x/2)/(3+tan²(x/2)) dx。令 u＝tan(x/2)，则 du＝(1/2)sec²(x/2)dx，即 sec²(x/2)dx＝2du，积分化为 ∫ 2/(3+u²) du＝(2/√3)·arctan(u/√3)+C。回代得 ∫ 1/(2+cos x) dx＝(2/√3)·arctan( tan(x/2)/√3 )+C。（已求导验证无误；板书已写到的每一步均正确，仅有两处漏写 dx，且未写完换元这一步）</p>
+    <p>解：
+cos x = 2cos²(x/2) − 1，
+分母 2 + cos x = 2cos²(x/2) + 1。
+再用 1 = sin²(x/2) + cos²(x/2)：
+分母 = sin²(x/2) + 3cos²(x/2) = cos²(x/2) · [3 + tan²(x/2)]。
+原积分 = ∫ sec²(x/2) / [3 + tan²(x/2)] dx。
+令 u = tan(x/2)，du = (1/2)sec²(x/2) dx，
+原积分 = ∫ 2/(3 + u²) du = (2/√3) arctan(u/√3) + C。
+回代：∫ dx/(2 + cos x) = (2/√3) arctan( tan(x/2)/√3 ) + C。</p>
   </div>
   <div class="sec key">
     <div class="sec-title">🔑 关键方法</div>
-    <p>分母含 a+cos x 先想二倍角：cos x＝2cos²(x/2)−1 把分母化成半角的平方项，再凑出 sec²(x/2) 配 tan(x/2) 换元；等价地可用万能代换 t＝tan(x/2) 一步到位。</p>
+    <p>分母含 a + cos x：先二倍角化成半角平方，再凑 sec²(x/2) 配 tan(x/2) 换元（或万能代换一步到位）。</p>
   </div>
   <div class="sec memo">
     <div class="sec-title">💡 需要记忆的结论</div>
-    <p>∫ dx/(a²+x²)＝(1/a)·arctan(x/a)+C；∫ 1/(2+cos x) dx＝(2/√3)·arctan( tan(x/2)/√3 )+C</p>
+    <p>∫ dx/(a² + x²) = (1/a) arctan(x/a) + C。</p>
   </div>
   <div class="sec var">
       <div class="sec-title">🔁 变式题（先闭卷做它）<span class="var-status">待作答</span></div>
@@ -184,20 +215,25 @@
   </div>
   <div class="sec err">
     <div class="sec-title">❌ 我的错误步骤</div>
-    <p>未提供本人步骤照片；用户自述（2026-11-08）：这类题总是卡在「小小换算」上——本题卡点在被积函数的拆项一步：分子 x²−x−1 没拆成 x²−(x+1)，积分就入不了手。错因判断依据为用户自述。</p>
+    <p>未提供本人步骤。
+卡点（本人自述）：分子拆项——x² − x − 1 没拆成 x² − (x + 1)，入不了手。</p>
   </div>
   <div class="sec sol">
     <div class="sec-title">✅ 正确解法</div>
     
-    <p>分子拆项：x²−x−1＝x²−(x+1)，故被积函数＝x²/(x²(x+1)) − (x+1)/(x²(x+1))＝1/(x+1) − 1/x²。逐项积分得 ln|x+1| + 1/x + C（选 D）。部分分式法亦可：设 (x²−x−1)/(x²(x+1))＝A/x + B/x² + C/(x+1)，解得 A＝0、B＝−1、C＝1，结果相同。已求导验证无误。</p>
+    <p>解：
+分子拆项：x² − x − 1 = x² − (x + 1)。
+被积函数 = x²/[x²(x + 1)] − (x + 1)/[x²(x + 1)]
+= 1/(x + 1) − 1/x²。
+逐项积分：∫ = ln|x + 1| + 1/x + C。选 D。</p>
   </div>
   <div class="sec key">
     <div class="sec-title">🔑 关键方法</div>
-    <p>分子按分母的因子拆项：分母含 x²(x+1)、分子是多项式时，先试着把分子拆成 x² 与 (x+1) 的组合，让每一项约分后变成能直接积的基本形式。</p>
+    <p>分子按分母的因子拆：分母有 x²(x + 1)，就把分子拆成 x² 与 (x + 1) 的组合，约分后逐项积。</p>
   </div>
   <div class="sec memo">
     <div class="sec-title">💡 需要记忆的结论</div>
-    <p>∫ dx/(x+1)＝ln|x+1|+C；∫ dx/x²＝−1/x+C（负号最容易丢）</p>
+    <p>∫ dx/x² = −1/x + C（负号最容易丢）。</p>
   </div>
   <div class="sec var">
       <div class="sec-title">🔁 变式题（先闭卷做它）<span class="var-status">待作答</span></div>
