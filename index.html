@@ -49,13 +49,13 @@
   <h1>📘 专升本高数错题本 · 图文版</h1>
   <div class="sub">目标：2027 四川统招专升本 400+ ｜ 复习规则：先闭卷做变式题，做对才算过，没过回看原题正确解法 ｜ <a href="dati.html" style="color:#2f5fd0;font-weight:700;">✏️ 去答题版（iPad 手写作答）</a> ｜ <a href="tijiao.html" style="color:#1e7a3c;font-weight:700;">➕ 提交新错题（传照片）</a> ｜ <a href="shiyong.html" style="color:#b3540e;font-weight:700;">🧪 一周试用（计算机）</a></div>
   <div class="stats">
-    <span class="stat">共 <b>4</b> 题</span>
-    <span class="stat">未掌握 <b>3</b> 题</span>
+    <span class="stat">共 <b>6</b> 题</span>
+    <span class="stat">未掌握 <b>5</b> 题</span>
     <span class="stat">半掌握 <b>0</b> 题</span>
     <span class="stat">已掌握 <b>1</b> 题</span>
-    <span class="stat">待作答变式 <b>4</b> 道</span>
+    <span class="stat">待作答变式 <b>6</b> 道</span>
     <span class="stat">最近复习日 <b>2026-10-30</b></span>
-    <span class="stat">复习排期 <b style="font-size:13px;">GS-002（2026-10-30）、GS-003（2026-11-03）、GS-004（2026-11-09）、GS-001（2026-11-19）</b></span>
+    <span class="stat">复习排期 <b style="font-size:13px;">GS-002（2026-10-30）、GS-003（2026-11-03）、GS-004（2026-11-09）、GS-005（2026-11-14）、GS-006（2026-11-14）、GS-001（2026-11-19）</b></span>
   </div>
   
 <details class="card">
@@ -239,6 +239,98 @@ cos x = 2cos²(x/2) − 1，
       <div class="sec-title">🔁 变式题（先闭卷做它）<span class="var-status">待作答</span></div>
       <p>求不定积分 ∫ (2x+3)/(x(x+1)) dx。</p>
       <a class="go-answer" href="dati.html#GS-004">✏️ 去做这道变式题 →</a>
+      <p class="hint">点过去在答题页手写，写完点「提交」我直接收到，晚上结算判分；参考答案只存档，不公布。</p>
+    </div>
+</details>
+<details class="card">
+  <summary>
+    <span class="code">GS-005</span>
+    <span class="module">定积分（变限积分与零点定理）</span>
+    <span class="tag tag-err">错因 · 方法选择</span>
+    <span class="tag m-bad">未掌握</span>
+    <span class="tag tag-date">复习 · 2026-11-14</span>
+    <span class="toggle-hint"><span class="h-open">展开详情 ▾</span><span class="h-close">收起 ▴</span></span>
+  </summary>
+  <div class="sec prob">
+    <div class="sec-title">📌 原题</div>
+    <p class="prob-text">【真题 9】设函数 f(x) 在 [0, 1] 上连续，且 f(x) &gt; 0，试证明：方程 ∫₀ˣ f(t)dt + ∫₁ˣ 1/f(t) dt = 0 在 (0, 1) 内有且只有一个根。（宋浩专升本数学课程板书题；提交图为老师板书截图）</p>
+  </div>
+  <div class="sec err">
+    <div class="sec-title">❌ 我的错误步骤</div>
+    <p>未提供本人步骤（提交的是老师板书截图；备注：5分钟内没想出来）。
+卡点：入手方法——想不到把方程左边设为辅助函数 g(x)，再用零点定理与单调性论证存在唯一根。</p>
+  </div>
+  <div class="sec sol">
+    <div class="sec-title">✅ 正确解法</div>
+    
+    <p>证明：
+设 g(x) = ∫₀ˣ f(t)dt + ∫₁ˣ 1/f(t) dt，x ∈ [0, 1]。
+g 在 [0, 1] 上连续。
+g(0) = ∫₁⁰ 1/f(t) dt = −∫₀¹ 1/f(t) dt &lt; 0（f &gt; 0，故 1/f &gt; 0）。
+g(1) = ∫₀¹ f(t) dt &gt; 0。
+由零点定理，存在 x₀ ∈ (0, 1)，使 g(x₀) = 0。
+g′(x) = f(x) + 1/f(x) &gt; 0，g 在 [0, 1] 上严格单调递增，根至多一个。
+故方程在 (0, 1) 内有且只有一个根。证毕。
+（板书核对：板书 g(0)、g(1)、g′(x) 三步均正确，只缺最后“零点定理＋单调性”收尾一句。）</p>
+  </div>
+  <div class="sec key">
+    <div class="sec-title">🔑 关键方法</div>
+    <p>方程求根先设辅助函数：把方程左边看成 x 的函数，再算端点值、求导看单调性；存在性用零点定理，唯一性用单调性。</p>
+  </div>
+  <div class="sec memo">
+    <div class="sec-title">💡 需要记忆的结论</div>
+    <p>f &gt; 0 时 ∫₀¹ f(t)dt &gt; 0、∫₀¹ 1/f(t)dt &gt; 0；变限积分求导 (∫ₐˣ f(t)dt)′ = f(x)。</p>
+  </div>
+  <div class="sec var">
+      <div class="sec-title">🔁 变式题（先闭卷做它）<span class="var-status">待作答</span></div>
+      <p>设 f(x) 在 [0, 1] 上连续，且 f(x) &gt; 0，证明方程 ∫₀ˣ f(t)dt − ∫ₓ¹ 1/f(t) dt = 0 在 (0, 1) 内有且只有一个根。</p>
+      <a class="go-answer" href="dati.html#GS-005">✏️ 去做这道变式题 →</a>
+      <p class="hint">点过去在答题页手写，写完点「提交」我直接收到，晚上结算判分；参考答案只存档，不公布。</p>
+    </div>
+</details>
+<details class="card">
+  <summary>
+    <span class="code">GS-006</span>
+    <span class="module">定积分（换元法证明积分等式）</span>
+    <span class="tag tag-err">错因 · 方法选择</span>
+    <span class="tag m-bad">未掌握</span>
+    <span class="tag tag-date">复习 · 2026-11-14</span>
+    <span class="toggle-hint"><span class="h-open">展开详情 ▾</span><span class="h-close">收起 ▴</span></span>
+  </summary>
+  <div class="sec prob">
+    <div class="sec-title">📌 原题</div>
+    <p class="prob-text">【真题 29】若 f(x) 在 [0, 1] 上连续，(1) 证明 ∫₀^π x f(sin x) dx = π/2 ∫₀^π f(sin x) dx。（只提交了第 (1) 问；提交图为老师板书截图，板书开头与结尾不在画面内）</p>
+  </div>
+  <div class="sec err">
+    <div class="sec-title">❌ 我的错误步骤</div>
+    <p>未提供本人步骤（提交的是老师板书截图；备注：这题根本做不来）。
+卡点：入手方法——想不到用 x = π − t 换元，利用 sin(π − t) = sin t 把积分里的 x 换掉。</p>
+  </div>
+  <div class="sec sol">
+    <div class="sec-title">✅ 正确解法</div>
+    
+    <p>证明：
+记 I = ∫₀^π x f(sin x) dx。
+令 t = π − x，则 x = π − t，dx = −dt；x = 0 时 t = π，x = π 时 t = 0。
+I = ∫_π^0 (π − t) f(sin(π − t)) (−dt)
+= ∫₀^π (π − t) f(sin t) dt（sin(π − t) = sin t）。
+= π∫₀^π f(sin t) dt − ∫₀^π t f(sin t) dt
+= π∫₀^π f(sin x) dx − I。
+移项：2I = π∫₀^π f(sin x) dx，即 I = π/2 ∫₀^π f(sin x) dx。证毕。
+（板书核对：板书走 x = t + π 再 u = −t 的路线，可见部分计算正确；开头换元起点与结尾“移项、得证”不在画面内。）</p>
+  </div>
+  <div class="sec key">
+    <div class="sec-title">🔑 关键方法</div>
+    <p>积分里出现 x·f(sin x) 且积分限为 0 到 π：试换元 x = π − t，用 sin(π − t) = sin t 把被积函数变回原形，再与原积分相加消掉含 x 的项。</p>
+  </div>
+  <div class="sec memo">
+    <div class="sec-title">💡 需要记忆的结论</div>
+    <p>sin(π − t) = sin t；∫₀^π x f(sin x) dx = π/2 ∫₀^π f(sin x) dx。</p>
+  </div>
+  <div class="sec var">
+      <div class="sec-title">🔁 变式题（先闭卷做它）<span class="var-status">待作答</span></div>
+      <p>若 f(x) 在 [0, 1] 上连续，证明 ∫₀^π (π − x) f(sin x) dx = π/2 ∫₀^π f(sin x) dx。</p>
+      <a class="go-answer" href="dati.html#GS-006">✏️ 去做这道变式题 →</a>
       <p class="hint">点过去在答题页手写，写完点「提交」我直接收到，晚上结算判分；参考答案只存档，不公布。</p>
     </div>
 </details>
