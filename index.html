@@ -44,6 +44,7 @@
   .flow .chip { background:#e7f6ec; border:1px solid #bfe3cb; color:#1e7a3c; border-radius:999px; padding:2px 10px; font-size:12.5px; font-weight:600; }
   .flow .arrow { color:#8aa892; font-weight:700; }
   footer { color:#8a93a5; font-size:12px; text-align:center; margin-top:8px; }
+  .frac{display:inline-block;vertical-align:-0.55em;text-align:center;margin:0 .1em}.frac .num{display:block;border-bottom:1.4px solid currentColor;padding:0 .22em;line-height:1.3;font-size:.94em}.frac .den{display:block;padding:0 .22em;line-height:1.3;font-size:.94em}.ig{display:inline-flex;align-items:center;vertical-align:-0.38em;margin:0 1px}.igs{font-size:1.32em;line-height:1}.igl{display:inline-flex;flex-direction:column;justify-content:center;margin-left:1px;font-size:.64em}.igl .igu,.igl .igb{line-height:1.08;min-height:1.08em}sup.ms,sub.ms{line-height:0}
 </style></head>
 <body><div class="wrap">
   <h1>📘 专升本高数错题本 · 图文版</h1>
@@ -69,30 +70,30 @@
   </summary>
   <div class="sec prob">
     <div class="sec-title">📌 原题</div>
-    <p class="prob-text">设 0&lt;a&lt;b，证明不等式 2a/(a²+b²) &lt; (ln b − ln a)/(b−a)。</p>
+    <p class="prob-text">设 0&lt;a&lt;b，证明不等式 <span class='frac'><span class='num'>2a</span><span class='den'>a²+b²</span></span> &lt; <span class='frac'><span class='num'>ln b − ln a</span><span class='den'>b−a</span></span>。</p>
   </div>
   <div class="sec err">
     <div class="sec-title">❌ 我的错误步骤</div>
-    <p>第 1 步：同乘 (b − a)，又令 t = b/a 换元 —— 变形正确。
+    <p>第 1 步：同乘 (b − a)，又令 t = <span class='frac'><span class='num'>b</span><span class='den'>a</span></span> 换元 —— 变形正确。
 第 2 步：改走辅助函数路线，写了几行又划掉。
-第 3 步：改走拉格朗日路线，写到 1/ξ = (ln b − ln a)/(b − a) 就停了。
-✗ 断点：第 3 步之后没接上——要用 ξ &lt; b 放缩 1/ξ，才能得到下界。</p>
+第 3 步：改走拉格朗日路线，写到 <span class='frac'><span class='num'>1</span><span class='den'>ξ</span></span> = <span class='frac'><span class='num'>ln b − ln a</span><span class='den'>b − a</span></span> 就停了。
+✗ 断点：第 3 步之后没接上——要用 ξ &lt; b 放缩 <span class='frac'><span class='num'>1</span><span class='den'>ξ</span></span>，才能得到下界。</p>
   </div>
   <div class="sec sol">
     <div class="sec-title">✅ 正确解法</div>
-    <div class="flow"><span class="chip">对 ln x 用拉格朗日</span><span class="arrow">→</span><span class="chip">差商 = 1/ξ</span><span class="arrow">→</span><span class="chip">a²+b² ≥ 2ab 放缩</span><span class="arrow">→</span><span class="chip">取倒数得证</span></div>
+    <div class="flow"><span class="chip">对 ln x 用拉格朗日</span><span class="arrow">→</span><span class="chip">差商 = <span class='frac'><span class='num'>1</span><span class='den'>ξ</span></span></span><span class="arrow">→</span><span class="chip">a²+b² ≥ 2ab 放缩</span><span class="arrow">→</span><span class="chip">取倒数得证</span></div>
     <p>证明：
 设 f(x) = ln x，x ∈ [a, b]。
 f 在 [a, b] 上连续、在 (a, b) 内可导，由拉格朗日中值定理，
-存在 ξ ∈ (a, b)，使 (ln b − ln a)/(b − a) = f′(ξ) = 1/ξ。
+存在 ξ ∈ (a, b)，使 <span class='frac'><span class='num'>ln b − ln a</span><span class='den'>b − a</span></span> = f′(ξ) = <span class='frac'><span class='num'>1</span><span class='den'>ξ</span></span>。
 由 (a − b)² ≥ 0，得 a² + b² ≥ 2ab，
-两边同除以 2a（&gt; 0）：(a² + b²)/(2a) ≥ b &gt; ξ &gt; 0。
-取倒数：1/ξ &gt; 2a/(a² + b²)。
-代回即得 (ln b − ln a)/(b − a) &gt; 2a/(a² + b²)。证毕。</p>
+两边同除以 2a（&gt; 0）：<span class='frac'><span class='num'>a² + b²</span><span class='den'>2a</span></span> ≥ b &gt; ξ &gt; 0。
+取倒数：<span class='frac'><span class='num'>1</span><span class='den'>ξ</span></span> &gt; <span class='frac'><span class='num'>2a</span><span class='den'>a² + b²</span></span>。
+代回即得 <span class='frac'><span class='num'>ln b − ln a</span><span class='den'>b − a</span></span> &gt; <span class='frac'><span class='num'>2a</span><span class='den'>a² + b²</span></span>。证毕。</p>
   </div>
   <div class="sec key">
     <div class="sec-title">🔑 关键方法</div>
-    <p>差商用拉格朗日换成 1/ξ，再用 a² + b² ≥ 2ab 放缩。</p>
+    <p>差商用拉格朗日换成 <span class='frac'><span class='num'>1</span><span class='den'>ξ</span></span>，再用 a² + b² ≥ 2ab 放缩。</p>
   </div>
   <div class="sec memo">
     <div class="sec-title">💡 需要记忆的结论</div>
@@ -100,7 +101,7 @@ f 在 [a, b] 上连续、在 (a, b) 内可导，由拉格朗日中值定理，
   </div>
   <div class="sec var">
       <div class="sec-title">🔁 变式题（先闭卷做它）<span class="var-status">待作答</span></div>
-      <p>设 0&lt;a&lt;b，证明：(b−a)/(2√b) &lt; √b − √a &lt; (b−a)/(2√a)。</p>
+      <p>设 0&lt;a&lt;b，证明：<span class='frac'><span class='num'>b−a</span><span class='den'>2√b</span></span> &lt; √b − √a &lt; <span class='frac'><span class='num'>b−a</span><span class='den'>2√a</span></span>。</p>
       <a class="go-answer" href="dati.html#GS-001">✏️ 去做这道变式题 →</a>
       <p class="hint">点过去在答题页手写，写完点「提交」我直接收到，晚上结算判分；参考答案只存档，不公布。</p>
     </div>
@@ -120,8 +121,8 @@ f 在 [a, b] 上连续、在 (a, b) 内可导，由拉格朗日中值定理，
   </div>
   <div class="sec err">
     <div class="sec-title">❌ 我的错误步骤</div>
-    <p>第 1 步：两次用拉格朗日，算出 f′(a₁) = (f(1) − 2)/2、f′(a₂) = 2 − f(1)；
-✗ 却把比值写成 f′(a₁)/f′(a₂) = −2（应为 −1/2），分子分母写反。
+    <p>第 1 步：两次用拉格朗日，算出 f′(a₁) = <span class='frac'><span class='num'>f(1) − 2</span><span class='den'>2</span></span>、f′(a₂) = 2 − f(1)；
+✗ 却把比值写成 <span class='frac'><span class='num'>f′(a₁)</span><span class='den'>f′(a₂)</span></span> = −2（应为 −<span class='frac'><span class='num'>1</span><span class='den'>2</span></span>），分子分母写反。
 第 2 步：由 f′(a₁) 与 f′(a₂) 异号，直接推出 ∃ξ 使 f′(ξ) = 0；
 ✗ <mark class="bad">介值定理只适用于连续函数，f′ 不一定连续</mark>，这一步不成立。
 第 3 步：结论区间写成 (0, 1)，题目要求的是 (0, 2)。</p>
@@ -165,7 +166,7 @@ f(0) = 4 − f(1)，f(0) 与 f(1) 分居 2 的两侧，
   </summary>
   <div class="sec prob">
     <div class="sec-title">📌 原题</div>
-    <p class="prob-text">求不定积分 ∫ 1/(2+cos x) dx。（宋浩专升本数学课程板书题，编号 (2)；提交图为老师板书截图，板书解法做到换元前一步未写完）</p>
+    <p class="prob-text">求不定积分 ∫ <span class='frac'><span class='num'>1</span><span class='den'>2+cos x</span></span> dx。（宋浩专升本数学课程板书题，编号 (2)；提交图为老师板书截图，板书解法做到换元前一步未写完）</p>
   </div>
   <div class="sec err">
     <div class="sec-title">❌ 我的错误步骤</div>
@@ -176,26 +177,26 @@ f(0) = 4 − f(1)，f(0) 与 f(1) 分居 2 的两侧，
     <div class="sec-title">✅ 正确解法</div>
     
     <p>解：
-cos x = 2cos²(x/2) − 1，
-分母 2 + cos x = 2cos²(x/2) + 1。
-再用 1 = sin²(x/2) + cos²(x/2)：
-分母 = sin²(x/2) + 3cos²(x/2) = cos²(x/2) · [3 + tan²(x/2)]。
-原积分 = ∫ sec²(x/2) / [3 + tan²(x/2)] dx。
-令 u = tan(x/2)，du = (1/2)sec²(x/2) dx，
-原积分 = ∫ 2/(3 + u²) du = (2/√3) arctan(u/√3) + C。
-回代：∫ dx/(2 + cos x) = (2/√3) arctan( tan(x/2)/√3 ) + C。</p>
+cos x = 2cos²(<span class='frac'><span class='num'>x</span><span class='den'>2</span></span>) − 1，
+分母 2 + cos x = 2cos²(<span class='frac'><span class='num'>x</span><span class='den'>2</span></span>) + 1。
+再用 1 = sin²(<span class='frac'><span class='num'>x</span><span class='den'>2</span></span>) + cos²(<span class='frac'><span class='num'>x</span><span class='den'>2</span></span>)：
+分母 = sin²(<span class='frac'><span class='num'>x</span><span class='den'>2</span></span>) + 3cos²(<span class='frac'><span class='num'>x</span><span class='den'>2</span></span>) = cos²(<span class='frac'><span class='num'>x</span><span class='den'>2</span></span>) · [3 + tan²(<span class='frac'><span class='num'>x</span><span class='den'>2</span></span>)]。
+原积分 = ∫ <span class='frac'><span class='num'>sec²(<span class='frac'><span class='num'>x</span><span class='den'>2</span></span>)</span><span class='den'>3 + tan²(<span class='frac'><span class='num'>x</span><span class='den'>2</span></span>)</span></span> dx。
+令 u = tan(<span class='frac'><span class='num'>x</span><span class='den'>2</span></span>)，du = (<span class='frac'><span class='num'>1</span><span class='den'>2</span></span>)sec²(<span class='frac'><span class='num'>x</span><span class='den'>2</span></span>) dx，
+原积分 = ∫ <span class='frac'><span class='num'>2</span><span class='den'>3 + u²</span></span> du = (<span class='frac'><span class='num'>2</span><span class='den'>√3</span></span>) arctan(<span class='frac'><span class='num'>u</span><span class='den'>√3</span></span>) + C。
+回代：∫ <span class='frac'><span class='num'>dx</span><span class='den'>2 + cos x</span></span> = (<span class='frac'><span class='num'>2</span><span class='den'>√3</span></span>) arctan( <span class='frac'><span class='num'>tan(<span class='frac'><span class='num'>x</span><span class='den'>2</span></span>)</span><span class='den'>√3</span></span> ) + C。</p>
   </div>
   <div class="sec key">
     <div class="sec-title">🔑 关键方法</div>
-    <p>分母含 a + cos x：先二倍角化成半角平方，再凑 sec²(x/2) 配 tan(x/2) 换元（或万能代换一步到位）。</p>
+    <p>分母含 a + cos x：先二倍角化成半角平方，再凑 sec²(<span class='frac'><span class='num'>x</span><span class='den'>2</span></span>) 配 tan(<span class='frac'><span class='num'>x</span><span class='den'>2</span></span>) 换元（或万能代换一步到位）。</p>
   </div>
   <div class="sec memo">
     <div class="sec-title">💡 需要记忆的结论</div>
-    <p>∫ dx/(a² + x²) = (1/a) arctan(x/a) + C。</p>
+    <p>∫ <span class='frac'><span class='num'>dx</span><span class='den'>a² + x²</span></span> = (<span class='frac'><span class='num'>1</span><span class='den'>a</span></span>) arctan(<span class='frac'><span class='num'>x</span><span class='den'>a</span></span>) + C。</p>
   </div>
   <div class="sec var">
       <div class="sec-title">🔁 变式题（先闭卷做它）<span class="var-status">待作答</span></div>
-      <p>求不定积分 ∫ 1/(3+cos x) dx。</p>
+      <p>求不定积分 ∫ <span class='frac'><span class='num'>1</span><span class='den'>3+cos x</span></span> dx。</p>
       <a class="go-answer" href="dati.html#GS-003">✏️ 去做这道变式题 →</a>
       <p class="hint">点过去在答题页手写，写完点「提交」我直接收到，晚上结算判分；参考答案只存档，不公布。</p>
     </div>
@@ -211,7 +212,7 @@ cos x = 2cos²(x/2) − 1，
   </summary>
   <div class="sec prob">
     <div class="sec-title">📌 原题</div>
-    <p class="prob-text">求不定积分 ∫ (x²−1−x)/(x²(x+1)) dx。（选择题：A. ln|x+1|+C；B. ln|x|−1/x+C；C. ln|x+1|−1/x+C；D. ln|x+1|+1/x+C；正确答案 D）</p>
+    <p class="prob-text">求不定积分 ∫ <span class='frac'><span class='num'>x²−1−x</span><span class='den'>x²(x+1)</span></span> dx。（选择题：A. ln|x+1|+C；B. ln|x|−<span class='frac'><span class='num'>1</span><span class='den'>x</span></span>+C；C. ln|x+1|−<span class='frac'><span class='num'>1</span><span class='den'>x</span></span>+C；D. ln|x+1|+<span class='frac'><span class='num'>1</span><span class='den'>x</span></span>+C；正确答案 D）</p>
   </div>
   <div class="sec err">
     <div class="sec-title">❌ 我的错误步骤</div>
@@ -223,9 +224,9 @@ cos x = 2cos²(x/2) − 1，
     
     <p>解：
 分子拆项：x² − x − 1 = x² − (x + 1)。
-被积函数 = x²/[x²(x + 1)] − (x + 1)/[x²(x + 1)]
-= 1/(x + 1) − 1/x²。
-逐项积分：∫ = ln|x + 1| + 1/x + C。选 D。</p>
+被积函数 = <span class='frac'><span class='num'>x²</span><span class='den'>x²(x + 1)</span></span> − <span class='frac'><span class='num'>x + 1</span><span class='den'>x²(x + 1)</span></span>
+= <span class='frac'><span class='num'>1</span><span class='den'>x + 1</span></span> − <span class='frac'><span class='num'>1</span><span class='den'>x²</span></span>。
+逐项积分：∫ = ln|x + 1| + <span class='frac'><span class='num'>1</span><span class='den'>x</span></span> + C。选 D。</p>
   </div>
   <div class="sec key">
     <div class="sec-title">🔑 关键方法</div>
@@ -233,11 +234,11 @@ cos x = 2cos²(x/2) − 1，
   </div>
   <div class="sec memo">
     <div class="sec-title">💡 需要记忆的结论</div>
-    <p>∫ dx/x² = −1/x + C（负号最容易丢）。</p>
+    <p>∫ <span class='frac'><span class='num'>dx</span><span class='den'>x²</span></span> = −<span class='frac'><span class='num'>1</span><span class='den'>x</span></span> + C（负号最容易丢）。</p>
   </div>
   <div class="sec var">
       <div class="sec-title">🔁 变式题（先闭卷做它）<span class="var-status">待作答</span></div>
-      <p>求不定积分 ∫ (2x+3)/(x(x+1)) dx。</p>
+      <p>求不定积分 ∫ <span class='frac'><span class='num'>2x+3</span><span class='den'>x(x+1)</span></span> dx。</p>
       <a class="go-answer" href="dati.html#GS-004">✏️ 去做这道变式题 →</a>
       <p class="hint">点过去在答题页手写，写完点「提交」我直接收到，晚上结算判分；参考答案只存档，不公布。</p>
     </div>
@@ -253,7 +254,7 @@ cos x = 2cos²(x/2) − 1，
   </summary>
   <div class="sec prob">
     <div class="sec-title">📌 原题</div>
-    <p class="prob-text">【真题 9】设函数 f(x) 在 [0, 1] 上连续，且 f(x) &gt; 0，试证明：方程 ∫₀ˣ f(t)dt + ∫₁ˣ 1/f(t) dt = 0 在 (0, 1) 内有且只有一个根。（宋浩专升本数学课程板书题；提交图为老师板书截图）</p>
+    <p class="prob-text">【真题 9】设函数 f(x) 在 [0, 1] 上连续，且 f(x) &gt; 0，试证明：方程 <span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>x</span><span class='igb'>0</span></span></span> f(t)dt + <span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>x</span><span class='igb'>1</span></span></span> <span class='frac'><span class='num'>1</span><span class='den'>f(t)</span></span> dt = 0 在 (0, 1) 内有且只有一个根。（宋浩专升本数学课程板书题；提交图为老师板书截图）</p>
   </div>
   <div class="sec err">
     <div class="sec-title">❌ 我的错误步骤</div>
@@ -264,12 +265,12 @@ cos x = 2cos²(x/2) − 1，
     <div class="sec-title">✅ 正确解法</div>
     
     <p>证明：
-设 g(x) = ∫₀ˣ f(t)dt + ∫₁ˣ 1/f(t) dt，x ∈ [0, 1]。
+设 g(x) = <span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>x</span><span class='igb'>0</span></span></span> f(t)dt + <span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>x</span><span class='igb'>1</span></span></span> <span class='frac'><span class='num'>1</span><span class='den'>f(t)</span></span> dt，x ∈ [0, 1]。
 g 在 [0, 1] 上连续。
-g(0) = ∫₁⁰ 1/f(t) dt = −∫₀¹ 1/f(t) dt &lt; 0（f &gt; 0，故 1/f &gt; 0）。
-g(1) = ∫₀¹ f(t) dt &gt; 0。
+g(0) = <span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>0</span><span class='igb'>1</span></span></span> <span class='frac'><span class='num'>1</span><span class='den'>f(t)</span></span> dt = −<span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>1</span><span class='igb'>0</span></span></span> <span class='frac'><span class='num'>1</span><span class='den'>f(t)</span></span> dt &lt; 0（f &gt; 0，故 <span class='frac'><span class='num'>1</span><span class='den'>f</span></span> &gt; 0）。
+g(1) = <span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>1</span><span class='igb'>0</span></span></span> f(t) dt &gt; 0。
 由零点定理，存在 x₀ ∈ (0, 1)，使 g(x₀) = 0。
-g′(x) = f(x) + 1/f(x) &gt; 0，g 在 [0, 1] 上严格单调递增，根至多一个。
+g′(x) = f(x) + <span class='frac'><span class='num'>1</span><span class='den'>f(x)</span></span> &gt; 0，g 在 [0, 1] 上严格单调递增，根至多一个。
 故方程在 (0, 1) 内有且只有一个根。证毕。
 （板书核对：板书 g(0)、g(1)、g′(x) 三步均正确，只缺最后“零点定理＋单调性”收尾一句。）</p>
   </div>
@@ -279,11 +280,11 @@ g′(x) = f(x) + 1/f(x) &gt; 0，g 在 [0, 1] 上严格单调递增，根至多�
   </div>
   <div class="sec memo">
     <div class="sec-title">💡 需要记忆的结论</div>
-    <p>f &gt; 0 时 ∫₀¹ f(t)dt &gt; 0、∫₀¹ 1/f(t)dt &gt; 0；变限积分求导 (∫ₐˣ f(t)dt)′ = f(x)。</p>
+    <p>f &gt; 0 时 <span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>1</span><span class='igb'>0</span></span></span> f(t)dt &gt; 0、<span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>1</span><span class='igb'>0</span></span></span> <span class='frac'><span class='num'>1</span><span class='den'>f(t)</span></span>dt &gt; 0；变限积分求导 (<span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>x</span><span class='igb'>a</span></span></span> f(t)dt)′ = f(x)。</p>
   </div>
   <div class="sec var">
       <div class="sec-title">🔁 变式题（先闭卷做它）<span class="var-status">待作答</span></div>
-      <p>设 f(x) 在 [0, 1] 上连续，且 f(x) &gt; 0，证明方程 ∫₀ˣ f(t)dt − ∫ₓ¹ 1/f(t) dt = 0 在 (0, 1) 内有且只有一个根。</p>
+      <p>设 f(x) 在 [0, 1] 上连续，且 f(x) &gt; 0，证明方程 <span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>x</span><span class='igb'>0</span></span></span> f(t)dt − <span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>1</span><span class='igb'>x</span></span></span> <span class='frac'><span class='num'>1</span><span class='den'>f(t)</span></span> dt = 0 在 (0, 1) 内有且只有一个根。</p>
       <a class="go-answer" href="dati.html#GS-005">✏️ 去做这道变式题 →</a>
       <p class="hint">点过去在答题页手写，写完点「提交」我直接收到，晚上结算判分；参考答案只存档，不公布。</p>
     </div>
@@ -299,7 +300,7 @@ g′(x) = f(x) + 1/f(x) &gt; 0，g 在 [0, 1] 上严格单调递增，根至多�
   </summary>
   <div class="sec prob">
     <div class="sec-title">📌 原题</div>
-    <p class="prob-text">【真题 29】若 f(x) 在 [0, 1] 上连续，(1) 证明 ∫₀^π x f(sin x) dx = π/2 ∫₀^π f(sin x) dx。（只提交了第 (1) 问；提交图为老师板书截图，板书开头与结尾不在画面内）</p>
+    <p class="prob-text">【真题 29】若 f(x) 在 [0, 1] 上连续，(1) 证明 <span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>π</span><span class='igb'>0</span></span></span> x f(sin x) dx = <span class='frac'><span class='num'>π</span><span class='den'>2</span></span> <span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>π</span><span class='igb'>0</span></span></span> f(sin x) dx。（只提交了第 (1) 问；提交图为老师板书截图，板书开头与结尾不在画面内）</p>
   </div>
   <div class="sec err">
     <div class="sec-title">❌ 我的错误步骤</div>
@@ -310,13 +311,13 @@ g′(x) = f(x) + 1/f(x) &gt; 0，g 在 [0, 1] 上严格单调递增，根至多�
     <div class="sec-title">✅ 正确解法</div>
     
     <p>证明：
-记 I = ∫₀^π x f(sin x) dx。
+记 I = <span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>π</span><span class='igb'>0</span></span></span> x f(sin x) dx。
 令 t = π − x，则 x = π − t，dx = −dt；x = 0 时 t = π，x = π 时 t = 0。
-I = ∫_π^0 (π − t) f(sin(π − t)) (−dt)
-= ∫₀^π (π − t) f(sin t) dt（sin(π − t) = sin t）。
-= π∫₀^π f(sin t) dt − ∫₀^π t f(sin t) dt
-= π∫₀^π f(sin x) dx − I。
-移项：2I = π∫₀^π f(sin x) dx，即 I = π/2 ∫₀^π f(sin x) dx。证毕。
+I = <span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>0</span><span class='igb'>π</span></span></span> (π − t) f(sin(π − t)) (−dt)
+= <span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>π</span><span class='igb'>0</span></span></span> (π − t) f(sin t) dt（sin(π − t) = sin t）。
+= π<span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>π</span><span class='igb'>0</span></span></span> f(sin t) dt − <span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>π</span><span class='igb'>0</span></span></span> t f(sin t) dt
+= π<span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>π</span><span class='igb'>0</span></span></span> f(sin x) dx − I。
+移项：2I = π<span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>π</span><span class='igb'>0</span></span></span> f(sin x) dx，即 I = <span class='frac'><span class='num'>π</span><span class='den'>2</span></span> <span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>π</span><span class='igb'>0</span></span></span> f(sin x) dx。证毕。
 （板书核对：板书走 x = t + π 再 u = −t 的路线，可见部分计算正确；开头换元起点与结尾“移项、得证”不在画面内。）</p>
   </div>
   <div class="sec key">
@@ -325,11 +326,11 @@ I = ∫_π^0 (π − t) f(sin(π − t)) (−dt)
   </div>
   <div class="sec memo">
     <div class="sec-title">💡 需要记忆的结论</div>
-    <p>sin(π − t) = sin t；∫₀^π x f(sin x) dx = π/2 ∫₀^π f(sin x) dx。</p>
+    <p>sin(π − t) = sin t；<span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>π</span><span class='igb'>0</span></span></span> x f(sin x) dx = <span class='frac'><span class='num'>π</span><span class='den'>2</span></span> <span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>π</span><span class='igb'>0</span></span></span> f(sin x) dx。</p>
   </div>
   <div class="sec var">
       <div class="sec-title">🔁 变式题（先闭卷做它）<span class="var-status">待作答</span></div>
-      <p>若 f(x) 在 [0, 1] 上连续，证明 ∫₀^π (π − x) f(sin x) dx = π/2 ∫₀^π f(sin x) dx。</p>
+      <p>若 f(x) 在 [0, 1] 上连续，证明 <span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>π</span><span class='igb'>0</span></span></span> (π − x) f(sin x) dx = <span class='frac'><span class='num'>π</span><span class='den'>2</span></span> <span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>π</span><span class='igb'>0</span></span></span> f(sin x) dx。</p>
       <a class="go-answer" href="dati.html#GS-006">✏️ 去做这道变式题 →</a>
       <p class="hint">点过去在答题页手写，写完点「提交」我直接收到，晚上结算判分；参考答案只存档，不公布。</p>
     </div>
