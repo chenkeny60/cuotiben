@@ -50,13 +50,13 @@
   <h1>📘 专升本高数错题本 · 图文版</h1>
   <div class="sub">目标：2027 四川统招专升本 400+ ｜ 复习规则：先闭卷做变式题，做对才算过，没过回看原题正确解法 ｜ <a href="dati.html" style="color:#2f5fd0;font-weight:700;">✏️ 去答题版（iPad 手写作答）</a> ｜ <a href="tijiao.html" style="color:#1e7a3c;font-weight:700;">➕ 提交新错题（传照片）</a> ｜ <a href="shiyong.html" style="color:#b3540e;font-weight:700;">🧪 一周试用（计算机）</a></div>
   <div class="stats">
-    <span class="stat">共 <b>6</b> 题</span>
-    <span class="stat">未掌握 <b>5</b> 题</span>
+    <span class="stat">共 <b>8</b> 题</span>
+    <span class="stat">未掌握 <b>7</b> 题</span>
     <span class="stat">半掌握 <b>0</b> 题</span>
     <span class="stat">已掌握 <b>1</b> 题</span>
-    <span class="stat">待作答变式 <b>6</b> 道</span>
+    <span class="stat">待作答变式 <b>8</b> 道</span>
     <span class="stat">最近复习日 <b>2026-10-30</b></span>
-    <span class="stat">复习排期 <b style="font-size:13px;">GS-002（2026-10-30）、GS-003（2026-11-03）、GS-004（2026-11-09）、GS-005（2026-11-14）、GS-006（2026-11-14）、GS-001（2026-11-19）</b></span>
+    <span class="stat">复习排期 <b style="font-size:13px;">GS-002（2026-10-30）、GS-003（2026-11-03）、GS-004（2026-11-09）、GS-005（2026-11-14）、GS-006（2026-11-14）、GS-007（2026-11-15）、GS-008（2026-11-15）、GS-001（2026-11-19）</b></span>
   </div>
   
 <details class="card">
@@ -332,6 +332,104 @@ I = <span class='ig'><span class='igs'>∫</span><span class='igl'><span class='
       <div class="sec-title">🔁 变式题（先闭卷做它）<span class="var-status">待作答</span></div>
       <p>若 f(x) 在 [0, 1] 上连续，证明 <span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>π</span><span class='igb'>0</span></span></span> (π − x) f(sin x) dx = <span class='frac'><span class='num'>π</span><span class='den'>2</span></span> <span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>π</span><span class='igb'>0</span></span></span> f(sin x) dx。</p>
       <a class="go-answer" href="dati.html#GS-006">✏️ 去做这道变式题 →</a>
+      <p class="hint">点过去在答题页手写，写完点「提交」我直接收到，晚上结算判分；参考答案只存档，不公布。</p>
+    </div>
+</details>
+<details class="card">
+  <summary>
+    <span class="code">GS-007</span>
+    <span class="module">定积分的应用（旋转体体积）</span>
+    <span class="tag tag-err">错因 · 方法选择</span>
+    <span class="tag m-bad">未掌握</span>
+    <span class="tag tag-date">复习 · 2026-11-15</span>
+    <span class="toggle-hint"><span class="h-open">展开详情 ▾</span><span class="h-close">收起 ▴</span></span>
+  </summary>
+  <div class="sec prob">
+    <div class="sec-title">📌 原题</div>
+    <p class="prob-text">【真题 32】过点 M(3, 0) 作曲线 y=ln(x−3) 的切线，该切线与此曲线及 x 轴围成一平面图形 D，试求平面图形 D 绕 x 轴旋转一周所得旋转体的体积。（宋浩专升本数学课程板书题；提交图为老师板书截图，板书只写到体积表达式 (<span class='frac'><span class='num'>1</span><span class='den'>3</span></span>)π·1²·e − <span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>e+3</span><span class='igb'>4</span></span></span> π ln²(x−3) dx，未算出结果）</p>
+  </div>
+  <div class="sec err">
+    <div class="sec-title">❌ 我的错误步骤</div>
+    <p>未提供本人步骤（提交的是老师板书截图）。
+卡点：入手方法——① 想不到先设切点、用 M(3,0) 反解切点横坐标；② 想不到把旋转体体积拆成“锥体体积 − 曲线旋转体体积”。</p>
+  </div>
+  <div class="sec sol">
+    <div class="sec-title">✅ 正确解法</div>
+    
+    <p>解：
+设切点为 (x₀, ln(x₀−3))，x₀ &gt; 3。
+y = ln(x−3)，y′ = <span class='frac'><span class='num'>1</span><span class='den'>x−3</span></span>，切点处斜率 k = <span class='frac'><span class='num'>1</span><span class='den'>x₀−3</span></span>。
+切线方程：y − ln(x₀−3) = <span class='frac'><span class='num'>x − x₀</span><span class='den'>x₀−3</span></span>。
+切线过 M(3, 0)：−ln(x₀−3) = <span class='frac'><span class='num'>3 − x₀</span><span class='den'>x₀−3</span></span> = −1，得 ln(x₀−3) = 1，x₀ = e+3，切点 (e+3, 1)。
+切线方程：y − 1 = <span class='frac'><span class='num'>x − e − 3</span><span class='den'>e</span></span>，即 y = <span class='frac'><span class='num'>x−3</span><span class='den'>e</span></span>。
+曲线与 x 轴交于 x = 4；切线与 x 轴交于 x = 3。
+图形 D：3 ≤ x ≤ 4 时上为切线、下为 x 轴；4 ≤ x ≤ e+3 时上为切线、下为曲线。
+绕 x 轴旋转：V = <span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>4</span><span class='igb'>3</span></span></span> π[<span class='frac'><span class='num'>x−3</span><span class='den'>e</span></span>]²dx + <span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>e+3</span><span class='igb'>4</span></span></span> π{[<span class='frac'><span class='num'>x−3</span><span class='den'>e</span></span>]² − ln²(x−3)}dx
+= <span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>e+3</span><span class='igb'>3</span></span></span> π(x−3)<span class='frac'><span class='num'>²</span><span class='den'>e²</span></span> dx − <span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>e+3</span><span class='igb'>4</span></span></span> π ln²(x−3) dx。
+<span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>e+3</span><span class='igb'>3</span></span></span> π(x−3)<span class='frac'><span class='num'>²</span><span class='den'>e²</span></span> dx = <span class='frac'><span class='num'>π</span><span class='den'>e²</span></span> · [(x−3)<span class='frac'><span class='num'>³</span><span class='den'>3</span></span>]₃^{e+3} = <span class='frac'><span class='num'>πe</span><span class='den'>3</span></span>（即 (<span class='frac'><span class='num'>1</span><span class='den'>3</span></span>)π·1²·e，圆锥体积）。
+<span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>e+3</span><span class='igb'>4</span></span></span> π ln²(x−3) dx：令 t = x−3，= π<span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>e</span><span class='igb'>1</span></span></span> ln²t dt；分部积分 ∫ ln²t dt = t ln²t − 2t ln t + 2t，<span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>e</span><span class='igb'>1</span></span></span> ln²t dt = e − 2。
+故 V = <span class='frac'><span class='num'>πe</span><span class='den'>3</span></span> − π(e−2) = <span class='frac'><span class='num'>2π(3−e)</span><span class='den'>3</span></span>。
+（板书核对：板书体积表达式 (<span class='frac'><span class='num'>1</span><span class='den'>3</span></span>)π·1²·e − <span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>e+3</span><span class='igb'>4</span></span></span> π ln²(x−3) dx 正确，只缺最后算 ∫ln²t 积分一步。）</p>
+  </div>
+  <div class="sec key">
+    <div class="sec-title">🔑 关键方法</div>
+    <p>设切点求切线：切点 (x₀, ln(x₀−3))，过 M(3,0) 得 ln(x₀−3)=1，x₀=e+3；旋转体体积拆分：锥体体积 − ∫ π ln²(x−3) dx。</p>
+  </div>
+  <div class="sec memo">
+    <div class="sec-title">💡 需要记忆的结论</div>
+    <p>∫ ln²x dx = x ln²x − 2x ln x + 2x + C；<span class='ig'><span class='igs'>∫</span><span class='igl'><span class='igu'>e</span><span class='igb'>1</span></span></span> ln²x dx = e−2；旋转体体积 V = π∫[f(x)]²dx。</p>
+  </div>
+  <div class="sec var">
+      <div class="sec-title">🔁 变式题（先闭卷做它）<span class="var-status">待作答</span></div>
+      <p>过点 M(2, 0) 作曲线 y=ln(x−2) 的切线，该切线与此曲线及 x 轴围成一平面图形 D，试求平面图形 D 绕 x 轴旋转一周所得旋转体的体积。</p>
+      <a class="go-answer" href="dati.html#GS-007">✏️ 去做这道变式题 →</a>
+      <p class="hint">点过去在答题页手写，写完点「提交」我直接收到，晚上结算判分；参考答案只存档，不公布。</p>
+    </div>
+</details>
+<details class="card">
+  <summary>
+    <span class="code">GS-008</span>
+    <span class="module">定积分（积分方程与对称性）</span>
+    <span class="tag tag-err">错因 · 方法选择</span>
+    <span class="tag m-bad">未掌握</span>
+    <span class="tag tag-date">复习 · 2026-11-15</span>
+    <span class="toggle-hint"><span class="h-open">展开详情 ▾</span><span class="h-close">收起 ▴</span></span>
+  </summary>
+  <div class="sec prob">
+    <div class="sec-title">📌 原题</div>
+    <p class="prob-text">【真题 38】设 f(x) 是连续函数，满足 f(x)=<span class='frac'><span class='num'>1+sin x</span><span class='den'>1+x²</span></span> − ∫₋₁¹ f(x) dx，则 lim<sub class='ms'>x→∞</sub> f(x)=____。（宋浩专升本数学课程板书题；提交图为老师板书截图，板书写到 3a=2 arctan 1 止，未写出 a 的值与极限值）</p>
+  </div>
+  <div class="sec err">
+    <div class="sec-title">❌ 我的错误步骤</div>
+    <p>未提供本人步骤（提交的是老师板书截图）。
+卡点：入手方法——想不到把 ∫₋₁¹ f(x)dx 看成常数设元 a，再对等式两边积分反解 a；以及奇函数在对称区间积分为 0。</p>
+  </div>
+  <div class="sec sol">
+    <div class="sec-title">✅ 正确解法</div>
+    
+    <p>解：
+记 a = ∫₋₁¹ f(x) dx（定积分是常数）。
+则 f(x) = <span class='frac'><span class='num'>1+sin x</span><span class='den'>1+x²</span></span> − a。
+两边在 [−1,1] 上积分：a = ∫₋₁¹ <span class='frac'><span class='num'>1+sin x</span><span class='den'>1+x²</span></span> dx − ∫₋₁¹ a dx = ∫₋₁¹ <span class='frac'><span class='num'>1+sin x</span><span class='den'>1+x²</span></span> dx − 2a。
+得 3a = ∫₋₁¹ <span class='frac'><span class='num'>1+sin x</span><span class='den'>1+x²</span></span> dx = ∫₋₁¹ <span class='frac'><span class='num'>1</span><span class='den'>1+x²</span></span> dx + ∫₋₁¹ sin <span class='frac'><span class='num'>x</span><span class='den'>1+x²</span></span> dx。
+sin <span class='frac'><span class='num'>x</span><span class='den'>1+x²</span></span> 是奇函数，对称区间积分为 0；∫₋₁¹ <span class='frac'><span class='num'>1</span><span class='den'>1+x²</span></span> dx = arctan x|₋₁¹ = <span class='frac'><span class='num'>π</span><span class='den'>4</span></span> − (−<span class='frac'><span class='num'>π</span><span class='den'>4</span></span>) = <span class='frac'><span class='num'>π</span><span class='den'>2</span></span>。
+故 3a = <span class='frac'><span class='num'>π</span><span class='den'>2</span></span>，a = <span class='frac'><span class='num'>π</span><span class='den'>6</span></span>。
+lim<sub class='ms'>x→∞</sub> f(x) = lim<sub class='ms'>x→∞</sub> <span class='frac'><span class='num'>1+sin x</span><span class='den'>1+x²</span></span> − a = 0 − <span class='frac'><span class='num'>π</span><span class='den'>6</span></span> = −<span class='frac'><span class='num'>π</span><span class='den'>6</span></span>（sin x 有界，<span class='frac'><span class='num'>1</span><span class='den'>1+x²</span></span>→0）。
+答案：−<span class='frac'><span class='num'>π</span><span class='den'>6</span></span>。
+（板书核对：板书三行推导均正确；第 3 行把奇函数积分等于 0 一步略写未标注、直接接到 arctan 结果，本身没错；只缺最后 a=<span class='frac'><span class='num'>π</span><span class='den'>6</span></span> 与极限 −<span class='frac'><span class='num'>π</span><span class='den'>6</span></span> 两步，因照片下沿裁切不在画面内。）</p>
+  </div>
+  <div class="sec key">
+    <div class="sec-title">🔑 关键方法</div>
+    <p>定积分是常数：设 a=∫₋₁¹ f(x)dx，对等式两边在 [−1,1] 上积分反解 a；奇函数在对称区间积分为 0；有界量 × 无穷小 → 0。</p>
+  </div>
+  <div class="sec memo">
+    <div class="sec-title">💡 需要记忆的结论</div>
+    <p>∫₋ₐᵃ 奇函数 = 0；∫₋₁¹ <span class='frac'><span class='num'>dx</span><span class='den'>1+x²</span></span>=<span class='frac'><span class='num'>π</span><span class='den'>2</span></span>；lim<sub class='ms'>x→∞</sub> sin <span class='frac'><span class='num'>x</span><span class='den'>1+x²</span></span>=0。</p>
+  </div>
+  <div class="sec var">
+      <div class="sec-title">🔁 变式题（先闭卷做它）<span class="var-status">待作答</span></div>
+      <p>设 f(x) 是连续函数，满足 f(x)=<span class='frac'><span class='num'>2+sin x</span><span class='den'>1+x²</span></span> − ∫₋₁¹ f(x) dx，求 lim<sub class='ms'>x→∞</sub> f(x)。</p>
+      <a class="go-answer" href="dati.html#GS-008">✏️ 去做这道变式题 →</a>
       <p class="hint">点过去在答题页手写，写完点「提交」我直接收到，晚上结算判分；参考答案只存档，不公布。</p>
     </div>
 </details>
